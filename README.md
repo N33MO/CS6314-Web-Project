@@ -20,7 +20,9 @@ login：需要动态变化，登陆后变为购物车按钮
 #### main
 
 ##### search
-Added
+Added search & input
+Filtering needed (?) (with categories)
+
 ##### container
 
 ###### id="coffee-row"
@@ -31,3 +33,5 @@ Put all the coffee items in this row
 
 Put all the tea items in this row
 
+### Login
+### Signup
