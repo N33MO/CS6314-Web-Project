@@ -1,5 +1,10 @@
 # Final Project
 
-Miao Miao mxm190020
-sxz branch 
-dxc190002
+## Coffee & Tea Distributor
+
+| Name           | NetID      |
+| -------------- | ---------- |
+| Shengxuan Zhao | sxz branch |
+| Dayuan Chen    | dxc190002  |
+| Miao Miao      | mxm190020  |
+
