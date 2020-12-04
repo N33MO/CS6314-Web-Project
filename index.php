@@ -8,10 +8,14 @@ if (isset($_GET['pageno'])) {
 $no_of_records_per_page = 10;
 $offset = ($pageno-1) * $no_of_records_per_page;
 
-$conn = mysqli_connect("localhost", "root", "password") or die("cannot connect to database");
-mysqli_select_db($conn, "databasename") or die("cannot find database");
+// $conn = mysqli_connect("localhost", "root", "password") or die("cannot connect to database");
+// mysqli_select_db($conn, "databasename") or die("cannot find database");
 
-
+$user = 'root';
+$password = ''; //To be completed if you have set a password to root
+$database = 'project'; //To be completed to connect to a database. The database must exist.
+$port = NULL; //Default must be NULL to use default port
+$conn = new mysqli('localhost', $user, $password, $database, $port);
 
 $output = '';
 if(isset($_POST['search']))
