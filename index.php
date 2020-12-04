@@ -1,3 +1,56 @@
+<?php
+
+if (isset($_GET['pageno'])) {
+    $pageno = $_GET['pageno'];
+} else {
+    $pageno = 1;
+}
+$no_of_records_per_page = 10;
+$offset = ($pageno-1) * $no_of_records_per_page;
+
+$conn = mysqli_connect("localhost", "root", "password") or die("cannot connect to database");
+mysqli_select_db($conn, "databasename") or die("cannot find database");
+
+
+
+$output = '';
+if(isset($_POST['search']))
+{
+    $total_pages_sql = "SELECT COUNT(*) FROM product";
+    $result = mysqli_query($conn,$total_pages_sql);
+    $total_rows = mysqli_fetch_array($result)[0];
+    $total_pages = ceil($total_rows / $no_of_records_per_page);
+
+    $search_query = $_POST['search'];
+    $search_query = preg_replace("#[^0-9a-z]#i", "", $search_query);
+
+    $search_result = mysqli_query($conn, "SELECT * FROM product WHERE name LIKE '%$search_query%'") or die("cannot search");
+    $r = mysqli_num_rows($result);
+    if($r == 0)
+    {
+        $output = 'There was no search results';
+    }
+    else
+    {
+        while($row = mysqli_fetch_array($search_result))
+        {
+            $ProductID = $row['ProductID'];
+            $Name = $row['Name'];
+            $Price = $row['Price'];
+            $Description = $row['Description'];
+            $Image = $row['Image'];
+            $ExpirationDate = $row['ExpirationDate'];
+            $Num = $row['Num'];
+            $output .= '<div>'.$ProductID.' '.$Name.' '.$Price.'</div>';
+        }
+    }
+
+}
+mysqli_close($conn);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,9 +131,10 @@
                     Tea Distributor description. Coffee & Tea Distributor description. </p>
                 <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p> -->
                 <div class="container">
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <form action="index.php" method="post" class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search for a product..." aria-label="Search">
+                        <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+                        <input type="submit" value="Search">
                     </form>
                 </div>
             </div>
@@ -160,6 +214,17 @@
             <hr>
 
         </div> <!-- /container -->
+
+        <ul class="pagination">
+            <li><a href="?pageno=1">First</a></li>
+            <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
+                <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Prev</a>
+            </li>
+            <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+                <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a>
+            </li>
+            <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+        </ul>
 
     </main>
 
