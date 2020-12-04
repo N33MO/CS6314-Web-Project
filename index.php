@@ -1,21 +1,38 @@
 <?php
+
+if (isset($_GET['pageno'])) {
+    $pageno = $_GET['pageno'];
+} else {
+    $pageno = 1;
+}
+$no_of_records_per_page = 10;
+$offset = ($pageno-1) * $no_of_records_per_page;
+
 $conn = mysqli_connect("localhost", "root", "password") or die("cannot connect to database");
 mysqli_select_db($conn, "databasename") or die("cannot find database");
+
+
+
 $output = '';
 if(isset($_POST['search']))
 {
+    $total_pages_sql = "SELECT COUNT(*) FROM product";
+    $result = mysqli_query($conn,$total_pages_sql);
+    $total_rows = mysqli_fetch_array($result)[0];
+    $total_pages = ceil($total_rows / $no_of_records_per_page);
+
     $search_query = $_POST['search'];
     $search_query = preg_replace("#[^0-9a-z]#i", "", $search_query);
 
-    mysqli_query($conn, "SELECT * FROM product WHERE name LIKE '%$search_query%'", $query) or die("cannot search");
-    $count = mysqli_num_rows($query);
-    if($count == 0)
+    $search_result = mysqli_query($conn, "SELECT * FROM product WHERE name LIKE '%$search_query%'") or die("cannot search");
+    $r = mysqli_num_rows($result);
+    if($r == 0)
     {
         $output = 'There was no search results';
     }
     else
     {
-        while($row = mysqli_fetch_array($query))
+        while($row = mysqli_fetch_array($search_result))
         {
             $ProductID = $row['ProductID'];
             $Name = $row['Name'];
@@ -29,6 +46,7 @@ if(isset($_POST['search']))
     }
 
 }
+mysqli_close($conn);
 
 
 ?>
@@ -196,6 +214,17 @@ if(isset($_POST['search']))
             <hr>
 
         </div> <!-- /container -->
+
+        <ul class="pagination">
+            <li><a href="?pageno=1">First</a></li>
+            <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
+                <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Prev</a>
+            </li>
+            <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+                <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a>
+            </li>
+            <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+        </ul>
 
     </main>
 
