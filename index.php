@@ -1,3 +1,38 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "password") or die("cannot connect to database");
+mysqli_select_db($conn, "databasename") or die("cannot find database");
+$output = '';
+if(isset($_POST['search']))
+{
+    $search_query = $_POST['search'];
+    $search_query = preg_replace("#[^0-9a-z]#i", "", $search_query);
+
+    mysqli_query($conn, "SELECT * FROM product WHERE name LIKE '%$search_query%'", $query) or die("cannot search");
+    $count = mysqli_num_rows($query);
+    if($count == 0)
+    {
+        $output = 'There was no search results';
+    }
+    else
+    {
+        while($row = mysqli_fetch_array($query))
+        {
+            $ProductID = $row['ProductID'];
+            $Name = $row['Name'];
+            $Price = $row['Price'];
+            $Description = $row['Description'];
+            $Image = $row['Image'];
+            $ExpirationDate = $row['ExpirationDate'];
+            $Num = $row['Num'];
+            $output .= '<div>'.$ProductID.' '.$Name.' '.$Price.'</div>';
+        }
+    }
+
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,9 +113,10 @@
                     Tea Distributor description. Coffee & Tea Distributor description. </p>
                 <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p> -->
                 <div class="container">
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <form action="index.php" method="post" class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search for a product..." aria-label="Search">
+                        <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+                        <input type="submit" value="Search">
                     </form>
                 </div>
             </div>
