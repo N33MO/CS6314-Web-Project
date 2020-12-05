@@ -19,7 +19,7 @@ name: project
 
 
 ## Pages
-### Index
+### index.php
 
 #### navbar
 
@@ -44,5 +44,20 @@ Put all the coffee items in this row
 
 Put all the tea items in this row
 
-### Login
-### Signup
+---
+### login
+### signup
+
+---
+### cart.php
+需要获取登录用户的account_id
+### detail.php
+product详细信息页面
+通过Get方式获取地址栏的product参数
+``` php
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $pid = $_GET['pid'];
+}
+// echo "pid: $pid";
+?>
