@@ -16,8 +16,8 @@ if(isset($_POST['login']))
     if(password_verify($password, $mypassword))
     {
         echo "password is correct";
-        $_SESSION['id'] = $id;
-        $_SESSION['user'] = $username;
+        // $_SESSION['id'] = $id;
+        // $_SESSION['user'] = $username;
         header("Location: customerpage.php");
 
     }
