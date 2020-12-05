@@ -9,6 +9,16 @@
 | Miao Miao      | mxm190020  |
 
 
+## Set Up Database
+
+### Create Database 
+
+name: project
+
+类型：utf8_general_ci
+
+
+
 ### Index
 
 #### navbar
