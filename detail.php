@@ -27,19 +27,67 @@
         }
     </style>
 </head>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $pid = $_GET['pid'];
+}
+// echo "pid: $pid";
+
+$ini = parse_ini_file("info.ini");
+$conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"]);
+if (mysqli_connect_errno($conn)) {
+    die('Connect Error (' . $conn->connect_errno . ') '
+        . $conn->connect_error);
+}
+$sql = "SELECT Name, Price, cart_own_product.Num  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
+$result = mysqli_query($conn, $sql);
+if ($result != null) {
+    
+}
+?>
 
 <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Coffee & Tea</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php#coffee-row">Coffee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php#tea-row">Tea</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php#">About</a>
+                </li>
+            </ul>
+            <a class="btn btn-outline-success my-2 my-sm-0" href="login.html">Login</a>
+        </div>
+    </nav>
+
     <main>
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $pid = $_GET['pid'];
-        }
-        echo "pid: $pid";
-        ?>
-        <h1>Detail Page</h1>
+        <div class="container">
+            <h1>Detail Page</h1>
+            <div class="row" id="coffee-row">
+                <div class="col-md-4">
+                    <h2>Coffee#1</h2>
+                    <img class="item-img" src="img/me.jpg" alt="me">
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                        magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+                </div>
+            </div>
+        </div>
     </main>
     <footer class="container">
-
         <hr>
         <p>Web Final Project - 2020 Fall - CS6314.002</p>
     </footer>
