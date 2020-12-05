@@ -13,9 +13,9 @@
 
 ### Create Database 
 
-Name: project
-
-Type: utf8_general_ci
+|     Name     |       Type      |
+| :----------: | :-------------: |
+|  project     | utf8_general_ci |
 
 
 ## Pages
