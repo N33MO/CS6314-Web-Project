@@ -13,9 +13,9 @@
 
 ### Create Database 
 
-name: project
+Name: project
 
-类型：utf8_general_ci
+Type: utf8_general_ci
 
 
 ## Pages
@@ -45,8 +45,8 @@ Put all the coffee items in this row
 Put all the tea items in this row
 
 ---
-### login
-### signup
+### login.html
+### signup.html
 
 ---
 ### cart.php
