@@ -8,6 +8,7 @@
 | Dayuan Chen    | dxc190002  |
 | Miao Miao      | mxm190020  |
 
+---
 
 ## Set Up Database
 
@@ -23,6 +24,7 @@
 
 3. insert-datas.sql
 
+---
 
 ## Pages
 
@@ -38,12 +40,12 @@
 
     `id="tea-row"`: Put all the tea items in this row
 
----
+
 ### login.html
 
 ### signup.html
 
----
+
 ### cart.php
 
 需要获取登录用户的account_id
