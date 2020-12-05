@@ -11,11 +11,17 @@
 
 ## Set Up Database
 
-### Create Database 
-
 |     Name     |       Type      |
 | :----------: | :-------------: |
 |  project     | utf8_general_ci |
+
+1. [Manage database (wamp)](http://localhost/phpmyadmin/index.php)
+
+    Create a new database named "project".
+
+2. create-table.sql
+
+3. insert-datas.sql
 
 
 ## Pages
