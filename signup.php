@@ -36,8 +36,8 @@ if(!empty($_POST))
 
 }
 mysqli_close($conn);
-echo '<script>';
-echo 'console.log(log here)';
-echo '</script>';
-// header("Location: login.html");
+// echo '<script>';
+// echo 'console.log(log here)';
+// echo '</script>';
+header("Location: login.html");
 ?>
