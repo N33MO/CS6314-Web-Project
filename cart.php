@@ -55,60 +55,71 @@
     </nav>
 
     <main role="main">
-        <?php
-        $account_id = 1;
-        $user = 'root';
-        $password = ''; //To be completed if you have set a password to root
-        $database = 'project'; //To be completed to connect to a database. The database must exist.
-        $conn = mysqli_connect('localhost', $user, $password, $database);
-        if (mysqli_connect_errno($conn)) {
-            die('Connect Error (' . $conn->connect_errno . ') '
-                . $conn->connect_error);
-        }
-        $sql = "SELECT Name, Price, cart_own_product.Num  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
-        // $sql = "SELECT * FROM cart_own_product";
-        $result = mysqli_query($conn, $sql);
-        if ($result != null) {
-        ?>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">name</th>
-                        <th scope="col">price</th>
-                        <th scope="col">number</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $count = 1;
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr><th>" . $count . "</th>";
-                        echo "<td>" . $row["Name"] . "</td>";
-                        echo "<td>" . $row["Price"] . "</td>";
-                        echo "<td>" . $row["Num"] .  "</td>";
-                        echo "</tr>" . PHP_EOL;
-                        $count += 1;
-                    }
-                    ?>
-                </tbody>
-            </table>
-        <?php
-        } else {
-        ?>
-            <div class="container">
+        <div class="container">
+            <?php
+            $account_id = 1;
+            $user = 'root';
+            $password = ''; //To be completed if you have set a password to root
+            $database = 'project'; //To be completed to connect to a database. The database must exist.
+            $conn = mysqli_connect('localhost', $user, $password, $database);
+            if (mysqli_connect_errno($conn)) {
+                die('Connect Error (' . $conn->connect_errno . ') '
+                    . $conn->connect_error);
+            }
+            $sql = "SELECT Name, Price, cart_own_product.Num  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
+            // $sql = "SELECT * FROM cart_own_product";
+            $result = mysqli_query($conn, $sql);
+            if ($result != null) {
+            ?>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">name</th>
+                            <th scope="col">price</th>
+                            <th scope="col">number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $count = 1;
+                        $total_price = 0;
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr><th>" . $count . "</th>";
+                            echo "<td>" . $row["Name"] . "</td>";
+                            echo "<td>" . $row["Price"] . "</td>";
+                            echo "<td>" . $row["Num"] .  "</td>";
+                            echo "</tr>" . PHP_EOL;
+                            $count += 1;
+                            $total_price += $row["Price"];
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            <?php
+            } else {
+            ?>
                 <p>Your shopping cart is empty.</p>
+            <?php
+            }
+            $conn->close();
+            ?>
+            <div class="row justify-content-between">
+                <div class="col-md-3">
+                    <p>Total price: <?php echo $total_price ?></p>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">check out</button>
+                </div>
             </div>
-        <?php
-        }
-        $conn->close();
-        ?>
-        <hr>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">check out</button>
+
+        </div>
         </div> <!-- /main -->
     </main>
 
     <footer class="container">
+
+        <hr>
         <p>Web Final Project - 2020 Fall - CS6314.002</p>
     </footer>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
