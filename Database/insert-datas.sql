@@ -12,15 +12,8 @@ VALUES(
     'Admin01_L',
     'admin01',
     '123456789'
-);
-INSERT INTO `admin`(
-    `AccountID`,
-    `Fname`,
-    `Lname`,
-    `UserName`,
-    `Password`
-)
-VALUES(
+),
+(
     '2',
     'Admin02_F',
     'Admin02_L',
@@ -45,17 +38,8 @@ VALUES(
     '1111111111',
     NULL,
     NULL
-);
-INSERT INTO `customer`(
-    `AccountID`,
-    `Fname`,
-    `Lname`,
-    `UserName`,
-    `Password`,
-    `Phone`,
-    `Email`
-)
-VALUES(
+),
+(
     '2',
     'Customer02_F',
     'Customer02_L',
@@ -82,17 +66,8 @@ VALUES(
     'coffee',
     'This is coffee #1.',
     'coffee1.jpg'
-);
-INSERT INTO `product`(
-    `ProductID`,
-    `Name`,
-    `Price`,
-    `Num`,
-    `Category`,
-    `Description`,
-    `Image`
-)
-VALUES(
+),
+(
     '21',
     'tea1',
     '12',
@@ -101,3 +76,6 @@ VALUES(
     'This is coffee #2.',
     'coffee2.jpg'
 );
+
+INSERT INTO `cart_own_product` (`AccountID`, `ProductID`, `Num`) 
+VALUES ('1', '11', '2'), ('1', '21', '1');
