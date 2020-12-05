@@ -38,16 +38,16 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#coffee-row">Coffee</a>
+                    <a class="nav-link" href="index.php#coffee-row">Coffee</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#tea-row">Tea</a>
+                    <a class="nav-link" href="index.php#tea-row">Tea</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="index.php#">About</a>
                 </li>
             </ul>
             <a class="btn btn-outline-success my-2 my-sm-0" href="login.html">Login</a>
@@ -58,16 +58,13 @@
         <div class="container">
             <?php
             $account_id = 1;
-            $user = 'root';
-            $password = ''; //To be completed if you have set a password to root
-            $database = 'project'; //To be completed to connect to a database. The database must exist.
-            $conn = mysqli_connect('localhost', $user, $password, $database);
+            $ini = parse_ini_file("info.ini");
+            $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"]);
             if (mysqli_connect_errno($conn)) {
                 die('Connect Error (' . $conn->connect_errno . ') '
                     . $conn->connect_error);
             }
             $sql = "SELECT Name, Price, cart_own_product.Num  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
-            // $sql = "SELECT * FROM cart_own_product";
             $result = mysqli_query($conn, $sql);
             if ($result != null) {
             ?>
@@ -96,6 +93,14 @@
                         ?>
                     </tbody>
                 </table>
+                <div class="row justify-content-between">
+                    <div class="col-md-3">
+                        <p>Total price: <?php echo $total_price ?></p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">check out</button>
+                    </div>
+                </div>
             <?php
             } else {
             ?>
@@ -104,15 +109,6 @@
             }
             $conn->close();
             ?>
-            <div class="row justify-content-between">
-                <div class="col-md-3">
-                    <p>Total price: <?php echo $total_price ?></p>
-                </div>
-                <div class="col-md-3">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">check out</button>
-                </div>
-            </div>
-
         </div>
         </div> <!-- /main -->
     </main>
