@@ -4,7 +4,7 @@
 
 | Name           | NetID      |
 | -------------- | ---------- |
-| Shengxuan Zhao | sxz branch |
+| Shengxuan Zhao | sxz190000 |
 | Dayuan Chen    | dxc190002  |
 | Miao Miao      | mxm190020  |
 
