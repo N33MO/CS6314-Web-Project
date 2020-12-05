@@ -1,60 +1,3 @@
-<?php
-
-if (isset($_GET['pageno'])) {
-    $pageno = $_GET['pageno'];
-} else {
-    $pageno = 1;
-}
-$no_of_records_per_page = 10;
-$offset = ($pageno-1) * $no_of_records_per_page;
-
-// $conn = mysqli_connect("localhost", "root", "password") or die("cannot connect to database");
-// mysqli_select_db($conn, "databasename") or die("cannot find database");
-
-$user = 'root';
-$password = ''; //To be completed if you have set a password to root
-$database = 'project'; //To be completed to connect to a database. The database must exist.
-$port = NULL; //Default must be NULL to use default port
-$conn = new mysqli('localhost', $user, $password, $database, $port);
-
-$output = '';
-if(isset($_POST['search']))
-{
-    $total_pages_sql = "SELECT COUNT(*) FROM product";
-    $result = mysqli_query($conn,$total_pages_sql);
-    $total_rows = mysqli_fetch_array($result)[0];
-    $total_pages = ceil($total_rows / $no_of_records_per_page);
-
-    $search_query = $_POST['search'];
-    $search_query = preg_replace("#[^0-9a-z]#i", "", $search_query);
-
-    $search_result = mysqli_query($conn, "SELECT * FROM product WHERE name LIKE '%$search_query%'") or die("cannot search");
-    $r = mysqli_num_rows($result);
-    if($r == 0)
-    {
-        $output = 'There was no search results';
-    }
-    else
-    {
-        while($row = mysqli_fetch_array($search_result))
-        {
-            $ProductID = $row['ProductID'];
-            $Name = $row['Name'];
-            $Price = $row['Price'];
-            $Description = $row['Description'];
-            $Image = $row['Image'];
-            $ExpirationDate = $row['ExpirationDate'];
-            $Num = $row['Num'];
-            $output .= '<div>'.$ProductID.' '.$Name.' '.$Price.'</div>';
-        }
-    }
-
-}
-mysqli_close($conn);
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -135,7 +78,7 @@ mysqli_close($conn);
                     Tea Distributor description. Coffee & Tea Distributor description. </p>
                 <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p> -->
                 <div class="container">
-                    <form action="index.php" method="post" class="form-inline my-2 my-lg-0">
+                    <form action="search.php" method="post" class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search for a product..." aria-label="Search">
                         <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
                         <input type="submit" value="Search">
@@ -145,8 +88,66 @@ mysqli_close($conn);
         </div>
 
         <div class="container">
+            <?php 
+                // for paging
+                // if (isset($_GET['pageno'])) {
+                //     $pageno = $_GET['pageno'];
+                // } else {
+                //     $pageno = 1;
+                // }
+                // $no_of_records_per_page = 10;
+                // $offset = ($pageno-1) * $no_of_records_per_page;
+                
+                $user = 'root';
+                $password = 'root'; //To be completed if you have set a password to root
+                $database = 'project'; //To be completed to connect to a database. The database must exist.
+                $port = "8889"; //Default must be NULL to use default port
+                $conn = new mysqli('localhost', $user, $password, $database, $port) or die("cannot connect to database");;
+
+                $output = "";
+                $output = "<div class='row' id='products'>";
+                    
+                $total_pages_sql = "SELECT COUNT(*) FROM product";
+                $result = mysqli_query($conn,$total_pages_sql);
+                $total_rows = mysqli_fetch_array($result)[0];
+                $total_pages = ceil($total_rows / $no_of_records_per_page);
+        
+            
+                $search_result = mysqli_query($conn, "SELECT * FROM product") or die("cannot search");
+                $r = mysqli_num_rows($result);
+                if($r == 0)
+                {
+                    $output = "<p>There was no products</p>";
+                }
+                else
+                {
+                    while($row = mysqli_fetch_array($search_result))
+                    {
+                        $ProductID = $row['ProductID'];
+                        $Name = $row['Name'];
+                        $Price = $row['Price'];
+                        $Description = $row['Description'];
+                        $Image = $row['Image'];
+                        $ExpirationDate = $row['ExpirationDate'];
+                        $Num = $row['Num'];
+                        $output .= "<div class='col-md-4'>";
+                        $output .= "<h2>".$Name."</h2>";
+                        $output .= "<img class='item-img' src='".$Image."' alt='".$Name."'>";
+                        $output .= "<p>".$Description."</p>";
+                        $output .= "<p><a class='btn btn-secondary' href='#' role='button'>View details &raquo;</a></p>
+                        </div>";
+                    }
+                }
+                    
+                
+                $output .= "</div>";
+                mysqli_close($conn);
+                echo $output;
+                
+            ?>
             <!-- Example row of columns -->
-            <div class="row" id="coffee-row">
+            <!-- <div class="row" id="coffee-row">
+                
                 <div class="col-md-4">
                     <h2>Coffee#1</h2>
                     <img class="item-img" src="img/me.jpg" alt="me">
@@ -213,7 +214,7 @@ mysqli_close($conn);
                         condimentum nibh, ut fermentum massa justo sit amet risus.</p>
                     <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
                 </div>
-            </div>
+            </div> -->
 
             <hr>
 
