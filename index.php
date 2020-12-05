@@ -78,43 +78,89 @@
                     Tea Distributor description. Coffee & Tea Distributor description. </p>
                 <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p> -->
                 <div class="container">
-                    <form action="search.php" method="post" class="form-inline my-2 my-lg-0">
+                    <!-- <form action="search.php" method="post" class="form-inline my-2 my-lg-0"> -->
+                    <form action="" method="post" class="form-inline my-2 my-lg-0">
+                        <label for="category">Category</label>
+                            <select id="category" name="category">
+                                <option value="*">Any</option>
+                                <option value="coffee">Coffee</option>
+                                <option value="tea">Tea</option>
+                            </select>
+                        <br>
                         <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search for a product..." aria-label="Search">
                         <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
                         <input type="submit" value="Search">
                     </form>
+                    
                 </div>
             </div>
         </div>
 
         <div class="container">
             <?php 
+                session_start();
                 // for paging
-                // if (isset($_GET['pageno'])) {
-                //     $pageno = $_GET['pageno'];
-                // } else {
-                //     $pageno = 1;
-                // }
-                // $no_of_records_per_page = 10;
-                // $offset = ($pageno-1) * $no_of_records_per_page;
+                if (isset($_GET['pageno'])) {
+                    $pageno = $_GET['pageno'];
+                } else {
+                    $pageno = 1;
+                }
+                $no_of_records_per_page = 10;
+                $offset = ($pageno-1) * $no_of_records_per_page;
                 
-                $user = 'root';
-                $password = 'root'; //To be completed if you have set a password to root
-                $database = 'project'; //To be completed to connect to a database. The database must exist.
-                $port = "8889"; //Default must be NULL to use default port
-                $conn = new mysqli('localhost', $user, $password, $database, $port) or die("cannot connect to database");;
-
+                $ini = parse_ini_file("info.ini");
+                $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
+                
                 $output = "";
                 $output = "<div class='row' id='products'>";
+                $category = $_POST['category'];
+
+                if(isset($_POST['search']))
+                {
+                    $total_pages_sql = "SELECT COUNT(*) FROM product WHERE ";
+                    $sql = "SELECT * FROM product WHERE ";
+                    $s = "";
+
+                    $search_query = $_POST['search'];
+                    if($search_query != "")
+                    {
+                        $search_query = preg_replace("#[^0-9a-z]#i", "", $search_query);
+                        $s .= "name LIKE '%$search_query%' AND ";
+                    }
+                  
+                    if($category != "*")
+                    {
+                        $s .= "category='$category'";
+                    }
+                    else
+                    {
+                        $s .= "1";
+                    }
+                    $total_pages_sql .= $s;
+                    $sql .= $s;
+
+                    // echo $sql;
+                    $result = mysqli_query($conn, $total_pages_sql);
+                    $total_rows = mysqli_fetch_array($result)[0];
+                    $total_pages = ceil($total_rows / $no_of_records_per_page);
+
+                    $search_result = mysqli_query($conn, $sql) or die("cannot search");
+                    $r = mysqli_num_rows($search_result);
                     
-                $total_pages_sql = "SELECT COUNT(*) FROM product";
-                $result = mysqli_query($conn,$total_pages_sql);
-                $total_rows = mysqli_fetch_array($result)[0];
-                $total_pages = ceil($total_rows / $no_of_records_per_page);
-        
-            
-                $search_result = mysqli_query($conn, "SELECT * FROM product") or die("cannot search");
-                $r = mysqli_num_rows($result);
+                }
+                else
+                {   
+                    $total_pages_sql = "SELECT COUNT(*) FROM product";
+                    $sql = "SELECT * FROM product";
+                    
+                    $result = mysqli_query($conn, $total_pages_sql);
+                    $total_rows = mysqli_fetch_array($result)[0];
+                    $total_pages = ceil($total_rows / $no_of_records_per_page);
+
+                    $search_result = mysqli_query($conn, $sql) or die("cannot search");
+                    $r = mysqli_num_rows($search_result);                                
+                    
+                }
                 if($r == 0)
                 {
                     $output = "<p>There was no products</p>";
@@ -132,89 +178,19 @@
                         $Num = $row['Num'];
                         $output .= "<div class='col-md-4'>";
                         $output .= "<h2>".$Name."</h2>";
-                        $output .= "<img class='item-img' src='".$Image."' alt='".$Name."'>";
+                        $output .= "<img class='item-img' src='img/".$Image."' alt='".$Name."'>";
                         $output .= "<p>".$Description."</p>";
-                        $output .= "<p><a class='btn btn-secondary' href='#' role='button'>View details &raquo;</a></p>
+                        $output .= "<p><a class='btn btn-secondary' href='./detail.php?pid=".$ProductID."' role='button'>View details &raquo;</a></p>
                         </div>";
                     }
-                }
-                    
-                
+                }     
+
                 $output .= "</div>";
                 mysqli_close($conn);
                 echo $output;
                 
-            ?>
-            <!-- Example row of columns -->
-            <!-- <div class="row" id="coffee-row">
                 
-                <div class="col-md-4">
-                    <h2>Coffee#1</h2>
-                    <img class="item-img" src="img/me.jpg" alt="me">
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Coffee#2</h2>
-                    <img class="item-img" src="img/me.jpg" alt="me">
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Coffee#3</h2>
-                    <img class="item-img" src="img/me.jpg" alt="me">
-                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id
-                        ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                        condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Coffee#4</h2>
-                    <img class="item-img" src="img/me.jpg" alt="me">
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Coffee#5</h2>
-                    <img class="item-img" src="img/me.jpg" alt="me">
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div>
-            </div>
-            <div class="row" id="tea-row">
-                <div class="col-md-4">
-                    <h2>Tea#1</h2>
-                    <img class="item-img" src="img/me.jpg" alt="me">
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Tea#2</h2>
-                    <img class="item-img" src="img/me.jpg" alt="me">
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Tea#3</h2>
-                    <img class="item-img" src="img/me.jpg" alt="me">
-                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id
-                        ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                        condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div>
-            </div> -->
+            ?>
 
             <hr>
 
