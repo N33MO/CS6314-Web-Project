@@ -18,7 +18,7 @@ if(!empty($_POST))
     if($nr == 0)
     {
         // add a new customer
-        $sql = "INSERT INTO customer ('Fname', 'Lname', 'UserName', 'Password', 'Phone', 'Email') VALUES ('$fname', '$lname', '$username', '$hash_password', '$phonenumber', '$email')";
+        $sql = "INSERT INTO `customer` (`Fname`, `Lname`, `UserName`, `Password`, `Phone`, `Email`) VALUES ('$fname', '$lname', '$username', '$hash_password', '$phonenumber', '$email')";
 
         if ($conn->query($sql) === TRUE) 
         {
