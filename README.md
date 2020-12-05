@@ -26,6 +26,41 @@
 
 ---
 
+## Connection To Database
+
+将参数信息放在info.ini文件中。
+
+用以下php代码读取配置参数：
+
+page.php
+
+```php
+$ini = parse_ini_file("info.ini");
+$conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"]);
+if (mysqli_connect_errno($conn)) {
+    die('Connect Error (' . $conn->connect_errno . ') '
+        . $conn->connect_error);
+}
+$sql = "SELECT * FROM product WHERE ProductID=$pid";
+$result = mysqli_query($conn, $sql);
+if ($result != null) {
+    // do something here
+}else{
+    // do something here
+}
+```
+
+info.ini
+
+```
+servername="localhost"
+username="root"
+password=""
+dbname="project"
+```
+
+---
+
 ## Pages
 
 ### index.php
@@ -63,3 +98,4 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 // echo "pid: $pid";
 ?>
+```
