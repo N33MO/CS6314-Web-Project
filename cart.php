@@ -22,7 +22,8 @@
 
         .item-img {
             float: left;
-            width: 200px;
+            max-width: 100%;
+            /* width: 200px; */
             padding-right: 1rem;
         }
     </style>
@@ -64,7 +65,7 @@
                 die('Connect Error (' . $conn->connect_errno . ') '
                     . $conn->connect_error);
             }
-            $sql = "SELECT Name, Price, cart_own_product.Num  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
+            $sql = "SELECT Name, Price, cart_own_product.Num, product.ProductID  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
             $result = mysqli_query($conn, $sql);
             if ($result != null) {
             ?>
@@ -83,7 +84,7 @@
                         $total_price = 0;
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr><th>" . $count . "</th>";
-                            echo "<td>" . $row["Name"] . "</td>";
+                            echo "<td><a href=detail.php?pid=" . $row["ProductID"] . ">" . $row["Name"] . "</a></td>";
                             echo "<td>" . $row["Price"] . "</td>";
                             echo "<td>" . $row["Num"] .  "</td>";
                             echo "</tr>" . PHP_EOL;

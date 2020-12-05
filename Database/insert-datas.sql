@@ -66,6 +66,14 @@ VALUES(
     'coffee',
     'This is coffee #1.',
     'coffee1.jpg'
+),(
+    '12',
+    'coffee2',
+    '10',
+    '30',
+    'coffee',
+    'This is coffee #2.',
+    'coffee2.jpg'
 ),
 (
     '21',
@@ -73,8 +81,8 @@ VALUES(
     '12',
     '32',
     'tea',
-    'This is coffee #2.',
-    'coffee2.jpg'
+    'This is tea #1.',
+    'tea1.jpg'
 );
 
 INSERT INTO `cart_own_product` (`AccountID`, `ProductID`, `Num`) 

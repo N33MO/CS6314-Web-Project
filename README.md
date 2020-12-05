@@ -99,3 +99,27 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 // echo "pid: $pid";
 ?>
 ```
+
+## Product - Name and ID
+
+### Coffee
+
+Category: coffee
+
+ProductID: 1***
+
+Example:
+
+    Name: coffee1
+    ProductID: 11
+
+### Tea
+
+Category: coffee
+
+ProductID: 2***
+
+Example:
+
+    Name: tea1
+    ProductID: 21
