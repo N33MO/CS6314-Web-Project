@@ -70,14 +70,16 @@ INSERT INTO `product`(
     `Name`,
     `Price`,
     `Num`,
+    `Category`,
     `Description`,
     `Image`
 )
 VALUES(
-    '1',
+    '11',
     'coffee1',
     '10',
     '30',
+    'coffee',
     'This is coffee #1.',
     'coffee1.jpg'
 );
@@ -86,14 +88,16 @@ INSERT INTO `product`(
     `Name`,
     `Price`,
     `Num`,
+    `Category`,
     `Description`,
     `Image`
 )
 VALUES(
-    '2',
-    'coffee2',
+    '21',
+    'tea1',
     '12',
     '32',
+    'tea',
     'This is coffee #2.',
     'coffee2.jpg'
 );

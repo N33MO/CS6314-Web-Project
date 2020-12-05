@@ -23,6 +23,7 @@ CREATE TABLE PRODUCT (
 	Name		VARCHAR(50) NOT NULL,
 	Price		DECIMAL(10, 2) NOT NULL,
 	Num	        INT NOT NULL,
+	Category	VARCHAR(50) NOT NULL,
 	Description	VARCHAR(200),
 	Image		VARCHAR(50),
 	PRIMARY KEY (ProductID)
