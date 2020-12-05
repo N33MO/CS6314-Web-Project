@@ -1,14 +1,14 @@
 <?php
-session_start();
-if(!isset($_SESSION['user']))
-{
-    header("Location: index.php");
-}
-if(isset($_GET['logout']) == 'yes')
-{
-    session_destroy();
-    header("Location: index.php");
-}
+// session_start();
+// if(!isset($_SESSION['user']))
+// {
+//     header("Location: index.php");
+// }
+// if(isset($_GET['logout']) == 'yes')
+// {
+//     essiosn_destroy();
+//     header("Location: index.php");
+// }
 
 ?>
 
@@ -65,20 +65,9 @@ if(isset($_GET['logout']) == 'yes')
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li> -->
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li> -->
             </ul>
-            <!-- <a class="btn btn-outline-success my-2 my-sm-0" href="login.html">Login</a> -->
+            <a class="btn btn-outline-success my-2 my-sm-0" href="cart.php">My cart</a>
+            <a class="btn btn-outline-success my-2 my-sm-0" href="index.php">Logout</a>
         </div>
     </nav>
 

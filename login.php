@@ -6,18 +6,19 @@ $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $
 if(isset($_POST['login']))
 {
     $email = trim($_POST['inputEmail']);
-    $password = trim($_POST['inputPassword']);
-    $md_password = password_hash('rasmuslerdorf', PASSWORD_ARGON2I);
-    $hasil = $conn->prepare("SELECT * FROM customer WHERE Email=?");
+    $password = $_POST['inputPassword'];
+    
+    $hasil = $conn->prepare("SELECT Password FROM customer WHERE Email=?");
     $hasil->bind_param("d", $email);
     $hasil->execute();
-    $hasil->bind_result($id, $fname, $lname, $dob, $ssn, $username, $mypassword, $mypayment, $mymailaddress, $mybilladdress, $myphone, $myemail);
+    $hasil->bind_result($mypassword);
     $hasil->fetch();
-    if($mypassword == $md_password)
+    if(password_verify($password, $mypassword))
     {
         echo "password is correct";
         $_SESSION['id'] = $id;
         $_SESSION['user'] = $username;
+        header("Location: customerpage.php");
 
     }
     else
@@ -25,4 +26,5 @@ if(isset($_POST['login']))
         echo "invalid email or password";
     }
 }
+
 ?>

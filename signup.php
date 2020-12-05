@@ -6,13 +6,13 @@ $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $
 if(!empty($_POST))
 {
     $email = trim($_POST['inputEmail']);
-    $password = trim($_POST['inputPassword']);
+    $password = $_POST['inputPassword'];
     $fname = trim($_POST['inputFname']);
     $lname = trim($_POST['inputLname']);
     $username = trim($_POST['inputUsername']);
     $phonenumber = trim($_POST['inputPhonenumber']);
     
-    $hash_password = password_hash($password, PASSWORD_ARGON2I);
+    $hash_password = password_hash($password, PASSWORD_DEFAULT);
     $res = mysqli_query($conn, "SELECT * FROM customer WHERE Email=$email");
     $nr = mysqli_num_rows($res);
     if($nr == 0)
