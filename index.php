@@ -80,10 +80,18 @@
                 <div class="container">
                     <!-- <form action="search.php" method="post" class="form-inline my-2 my-lg-0"> -->
                     <form action="" method="post" class="form-inline my-2 my-lg-0">
+                        <label for="category">Category</label>
+                            <select id="category" name="category">
+                                <option value="*">Any</option>
+                                <option value="coffee">Coffee</option>
+                                <option value="tea">Tea</option>
+                            </select>
+                        <br>
                         <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search for a product..." aria-label="Search">
                         <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
                         <input type="submit" value="Search">
                     </form>
+                    
                 </div>
             </div>
         </div>
@@ -105,32 +113,52 @@
                 
                 $output = "";
                 $output = "<div class='row' id='products'>";
+                $category = $_POST['category'];
 
                 if(isset($_POST['search']))
                 {
-                    $search_query = $_POST['search'];
-                    $search_query = preg_replace("#[^0-9a-z]#i", "", $search_query);
+                    $total_pages_sql = "SELECT COUNT(*) FROM product WHERE ";
+                    $sql = "SELECT * FROM product WHERE ";
+                    $s = "";
 
-                    $total_pages_sql = "SELECT COUNT(*) FROM product WHERE name LIKE '%$search_query%'";
+                    $search_query = $_POST['search'];
+                    if($search_query != "")
+                    {
+                        $search_query = preg_replace("#[^0-9a-z]#i", "", $search_query);
+                        $s .= "name LIKE '%$search_query%' AND ";
+                    }
+                  
+                    if($category != "*")
+                    {
+                        $s .= "category='$category'";
+                    }
+                    else
+                    {
+                        $s .= "1";
+                    }
+                    $total_pages_sql .= $s;
+                    $sql .= $s;
+
+                    // echo $sql;
                     $result = mysqli_query($conn, $total_pages_sql);
                     $total_rows = mysqli_fetch_array($result)[0];
                     $total_pages = ceil($total_rows / $no_of_records_per_page);
 
-                    $search_result = mysqli_query($conn, "SELECT * FROM product WHERE name LIKE '%$search_query%'") or die("cannot search");
-                    $r = mysqli_num_rows($result);
+                    $search_result = mysqli_query($conn, $sql) or die("cannot search");
+                    $r = mysqli_num_rows($search_result);
                     
                 }
                 else
-                {                      
+                {   
                     $total_pages_sql = "SELECT COUNT(*) FROM product";
-                    $result = mysqli_query($conn,$total_pages_sql);
+                    $sql = "SELECT * FROM product";
+                    
+                    $result = mysqli_query($conn, $total_pages_sql);
                     $total_rows = mysqli_fetch_array($result)[0];
                     $total_pages = ceil($total_rows / $no_of_records_per_page);
-            
-                
-                    $search_result = mysqli_query($conn, "SELECT * FROM product") or die("cannot search");
-                    $r = mysqli_num_rows($result);
-                                   
+
+                    $search_result = mysqli_query($conn, $sql) or die("cannot search");
+                    $r = mysqli_num_rows($search_result);                                
                     
                 }
                 if($r == 0)
