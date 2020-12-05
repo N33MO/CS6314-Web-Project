@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <form class="form-signin" method="post" id="signinform">
+    <form class="form-signin" action="login.php" method="post" id="signinform">
         <div class="text-center mb-4">
             <!-- <img class="mb-4" src="{{ site.baseurl }}/docs/{{ site.docs_version }}/assets/brand/bootstrap-solid.svg"
                 alt="" width="72" height="72"> -->
@@ -24,12 +24,12 @@
         </div>
 
         <div class="form-label-group">
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+            <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
             <label for="inputEmail">Email address</label>
         </div>
 
         <div class="form-label-group">
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
             <label for="inputPassword">Password</label>
         </div>
 
@@ -38,7 +38,7 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" action="login.php" type="submit" id='login'>Log in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="login" name="login">Log in</button>
         <hr>
         <p>Do not have an account? - <a href="signup.html">sign up here</a></p>
         <p class="mt-5 mb-3 text-muted text-center">Web Final Project - 2020 Fall - CS6314.002</p>

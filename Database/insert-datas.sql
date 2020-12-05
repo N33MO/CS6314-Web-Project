@@ -37,7 +37,7 @@ VALUES(
     'customer01',
     '1111111111',
     NULL,
-    NULL
+    'user1@email.com'
 ),
 (
     '2',
@@ -46,7 +46,7 @@ VALUES(
     'customer02',
     '2222222222',
     NULL,
-    NULL
+    "user2@email.com"
 );
 
 INSERT INTO `product`(
