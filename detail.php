@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 // echo "pid: $pid";
 
 $ini = parse_ini_file("info.ini");
-$conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"]);
+$conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]);
 if (mysqli_connect_errno($conn)) {
     die('Connect Error (' . $conn->connect_errno . ') '
         . $conn->connect_error);
