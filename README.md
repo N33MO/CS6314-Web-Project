@@ -21,8 +21,11 @@
     Create a new database named "project".
 
 2. create-table.sql
+Added "Rremoved" to table "Product", deafault is 0, not removed; 1 for removed. Soft delete.
 
 3. insert-datas.sql
+Updated data to hashed password. For testing.
+Admin data can only be inserted by us. Cannot register as an admin.
 
 ---
 
