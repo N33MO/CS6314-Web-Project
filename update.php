@@ -30,7 +30,7 @@ if ($result != null) {
         <main>
             <div class="container">
                 <h1>Update item</h1>
-                <div class="row justify-content-center" id="coffee-row">
+                <div class="row justify-content-center">
                     <div class="col-md-6">
                         <form action="updatedatabase.php" method="post">
                             <div class="form-group">
