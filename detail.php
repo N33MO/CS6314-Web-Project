@@ -34,8 +34,10 @@ if ($result != null) {
                         <img class="item-img" src="img/<?php echo $row["Image"]; ?>" alt="<?php echo $row["Image"]; ?>">
                     </div>
                     <div class="col-md-4">
-                        <h2><?php echo $row["Name"]; ?></h2>
-                        <p><?php echo $row["Description"]; ?></p>
+                        <h2>Product name: <?php echo $row["Name"]; ?></h2>
+                        <p>Description: <?php echo $row["Description"]; ?></p>
+                        <p>Price: $<?php echo $row["Price"]; ?></p>
+                        <p>In stock: <?php echo $row["Num"]; ?></p>
                         <p><a class="btn btn-secondary" href="add_cart.php?pid=<?php echo $pid; ?>">Add to Cart</a></p>
                     </div>
                 </div>

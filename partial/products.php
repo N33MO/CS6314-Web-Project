@@ -1,17 +1,19 @@
 <?php
+    session_start();
+    if (isset($_GET['pageno'])) {
+        $pageno = $_GET['pageno'];
+    } else {
+        $pageno = 1;
+    }
+    $no_of_records_per_page = 6;
+    $offset = ($pageno - 1) * $no_of_records_per_page;
+
+    $ini = parse_ini_file("info.ini");
+    $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
+        
+
     if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) // guest interface
-    {
-        if (isset($_GET['pageno'])) {
-            $pageno = $_GET['pageno'];
-        } else {
-            $pageno = 1;
-        }
-        $no_of_records_per_page = 10;
-        $offset = ($pageno - 1) * $no_of_records_per_page;
-        
-        $ini = parse_ini_file("info.ini");
-        $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
-        
+    {     
         $output = "";
         $output = "<div class='row' id='products'>";
         if (isset($_POST['category'])) {
@@ -36,6 +38,8 @@
             }
             $total_pages_sql .= $s;
             $sql .= $s;
+
+            $sql .= " LIMIT ".$offset." , ".$no_of_records_per_page;
         
             // echo $sql;
             $result = mysqli_query($conn, $total_pages_sql);
@@ -46,7 +50,7 @@
             $r = mysqli_num_rows($search_result);
         } else {
             $total_pages_sql = "SELECT COUNT(*) FROM product WHERE Removed<>'1'";
-            $sql = "SELECT * FROM product WHERE Removed<>'1'";
+            $sql = "SELECT * FROM product WHERE Removed<>'1' LIMIT ".$offset." , ".$no_of_records_per_page;
         
             $result = mysqli_query($conn, $total_pages_sql);
             $total_rows = mysqli_fetch_array($result)[0];
@@ -80,17 +84,6 @@
     } 
     elseif(isset($_SESSION["adminloggedin"]) && $_SESSION["adminloggedin"] === true) // admin interface
     {
-        if (isset($_GET['pageno'])) {
-            $pageno = $_GET['pageno'];
-        } else {
-            $pageno = 1;
-        }
-        $no_of_records_per_page = 10;
-        $offset = ($pageno - 1) * $no_of_records_per_page;
-        
-        $ini = parse_ini_file("info.ini");
-        $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
-        
         $output = "<div><a class='btn btn-secondary' href='./add.php' role='button'>Add new item &raquo;</a></div>";
 
         $output .= "<div class='row' id='products'>";
@@ -117,6 +110,8 @@
             }
             $total_pages_sql .= $s;
             $sql .= $s;
+
+            $sql .= " LIMIT ".$offset." , ".$no_of_records_per_page;
         
             // echo $sql;
             $result = mysqli_query($conn, $total_pages_sql);
@@ -127,7 +122,7 @@
             $r = mysqli_num_rows($search_result);
         } else {
             $total_pages_sql = "SELECT COUNT(*) FROM product WHERE Removed<>'1'";
-            $sql = "SELECT * FROM product WHERE Removed<>'1'";
+            $sql = "SELECT * FROM product WHERE Removed<>'1' LIMIT ".$offset." , ".$no_of_records_per_page;
         
             $result = mysqli_query($conn, $total_pages_sql);
             $total_rows = mysqli_fetch_array($result)[0];
@@ -160,17 +155,7 @@
         echo $output;
     }
     else // customer interface
-    { 
-        if (isset($_GET['pageno'])) {
-            $pageno = $_GET['pageno'];
-        } else {
-            $pageno = 1;
-        }
-        $no_of_records_per_page = 10;
-        $offset = ($pageno - 1) * $no_of_records_per_page;
-        
-        $ini = parse_ini_file("info.ini");
-        $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
+    {         
         
         $output = "";
         $output = "<div class='row' id='products'>";
@@ -196,6 +181,8 @@
             }
             $total_pages_sql .= $s;
             $sql .= $s;
+
+            $sql .= " LIMIT ".$offset." , ".$no_of_records_per_page;
         
             // echo $sql;
             $result = mysqli_query($conn, $total_pages_sql);
@@ -206,7 +193,7 @@
             $r = mysqli_num_rows($search_result);
         } else {
             $total_pages_sql = "SELECT COUNT(*) FROM product WHERE Removed<>'1'";
-            $sql = "SELECT * FROM product WHERE Removed<>'1'";
+            $sql = "SELECT * FROM product WHERE Removed<>'1' LIMIT ".$offset." , ".$no_of_records_per_page;
         
             $result = mysqli_query($conn, $total_pages_sql);
             $total_rows = mysqli_fetch_array($result)[0];
@@ -228,6 +215,7 @@
                 $output .= "<div class='col-md-4'>";
                 $output .= "<h2>" . $Name . "</h2>";
                 $output .= "<img class='item-img' src='img/" . $Image . "' alt='" . $Name . "'>";
+                $output .= "<p>$".$Price."</p>";
                 $output .= "<p>" . $Description . "</p>";
                 $output .= "<p><a class='btn btn-secondary' href='./detail.php?pid=" . $ProductID . "' role='button'>View details &raquo;</a></p>
                     </div>";
@@ -236,6 +224,13 @@
         
         $output .= "</div>";
         mysqli_close($conn);
+        $paginglist = "";
+        for($x=1; $x <= $total_pages; $x++)
+        {
+            $paginglist .= "&nbsp|&nbsp<li><a href='?pageno=".$x."'>Page ".$x."</a></li>";
+        }
+        $paginglist .= "&nbsp|&nbsp";
+
         echo $output;
     }
 

@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include "partial/header.php";?>
@@ -33,14 +37,26 @@
         </div>
 
         <div class="container">
-            <?php include "partial/products.php"; ?>
+            <?php 
+                if(isset($_GET["pageno"]))
+                {
+                    $pageno = $_GET["pageno"];
+                }
+                else
+                {
+                    $pageno = 1;
+                }
+                include "partial/products.php";
+            ?>
 
             <hr>
 
         </div> <!-- /container -->
+        
 
-        <ul class="pagination">
-            <li><a href="?pageno=1">First</a></li>
+        <div style="text-align: center;margin: auto;">
+        <ul class="pagination" style="justify-content: center;">
+            <li><a href="?pageno=1">First</a></li>&nbsp|&nbsp
             <li class="<?php if ($pageno <= 1) {
                             echo 'disabled';
                         } ?>">
@@ -50,6 +66,9 @@
                                 echo "?pageno=" . ($pageno - 1);
                             } ?>">Prev</a>
             </li>
+            <?php
+                echo $paginglist;
+            ?>
             <li class="<?php if ($pageno >= $total_pages) {
                             echo 'disabled';
                         } ?>">
@@ -58,9 +77,11 @@
                             } else {
                                 echo "?pageno=" . ($pageno + 1);
                             } ?>">Next</a>
-            </li>
+            </li>&nbsp|&nbsp
             <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
         </ul>
+        </div>
+        
 
     </main>
 
