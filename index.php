@@ -16,16 +16,16 @@
                 <div class="container">
                     <!-- <form action="search.php" method="post" class="form-inline my-2 my-lg-0"> -->
                     <form action="" method="post" class="form-inline my-2 my-lg-0">
+                        <div class="form-group"></div>
                         <label for="category">Category</label>
-                        <select id="category" name="category">
+                        <select id="category" class="form-control ml-sm-2" name="category">
                             <option value="*">Any</option>
                             <option value="coffee">Coffee</option>
                             <option value="tea">Tea</option>
                         </select>
-                        <br>
-                        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search for a product..." aria-label="Search">
+                        <input class="form-control  ml-sm-2" type="text" name="search" placeholder="Search for a product..." aria-label="Search">
                         <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
-                        <input type="submit" value="Search">
+                        <input type="submit" class="btn btn-primary ml-sm-2" value="Search">
                     </form>
 
                 </div>
