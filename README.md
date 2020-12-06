@@ -63,9 +63,36 @@ dbname="project"
 
 ## Pages
 
+### partial/header.php
+调用方法：
+
+```php
+<?php include "partial/header.php"; ?>
+```
+
+引用位置：
+
+1. index.php
+2. detail.php
+3. cart.php 
+4. place_order.php
+
 ### index.php
 
-1. navbar login：需要动态变化，登陆后变为购物车按钮
+1. navbar login -> move to partial/navbar.php
+
+    调用方法：
+
+    ```php
+    <?php include "partial/navbar.php"; ?>
+    ```
+
+    引用位置：
+    
+    1. index.php
+    2. detail.php
+    3. cart.php 
+    4. place_order.php
 
 2. search: Filtering needed (?) (with categories)
 
