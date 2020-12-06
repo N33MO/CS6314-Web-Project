@@ -30,7 +30,8 @@ if (!isset($_SESSION)) {
             echo "<a class='btn btn-outline-success my-2 my-sm-0' href='login.php'>Login</a>";
         } else {
             $s = "hello," . htmlspecialchars($_SESSION["username"]);
-            $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='cart.php'>My cart</a>";
+            $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='order.php'>Orders</a>";
+            $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='cart.php'>Cart</a>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='logout.php'>Logout</a>";
             echo $s;
         }
