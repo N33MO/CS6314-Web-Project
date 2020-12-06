@@ -51,6 +51,7 @@ if ($result != null) {
 
     </body>
 <?php
+$conn->close();
 }
 ?>
 
