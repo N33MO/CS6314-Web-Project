@@ -57,6 +57,7 @@ if ($result != null) {
                             <option value="*">Any</option>
                             <option value="coffee">Coffee</option>
                             <option value="tea">Tea</option>
+                            <option selected="selected"><?php echo $row["Category"]; ?></option>
                         </select>
 
                         <label for="newPrice">Product price: </label>
