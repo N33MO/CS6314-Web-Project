@@ -30,7 +30,7 @@ if (!isset($_SESSION)) {
                 die('Connect Error (' . $conn->connect_errno . ') '
                     . $conn->connect_error);
             }
-            $sql = "SELECT OrderID, PurchaseDate, TotalPrice FROM purchased_order WHERE purchased_order.AccountID=$account_id";
+            $sql = "SELECT OrderID, PurchaseDate, TotalPrice FROM purchased_order WHERE purchased_order.AccountID=$account_id ORDER BY OrderID";
             $result = mysqli_query($conn, $sql);
             if ($result != null && $result -> num_rows>0) {
             ?>
