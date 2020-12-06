@@ -185,7 +185,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         $Price = $row['Price'];
                         $Description = $row['Description'];
                         $Image = $row['Image'];
-                        $ExpirationDate = $row['ExpirationDate'];
                         $Num = $row['Num'];
                         $output .= "<div class='col-md-4'>";
                         $output .= "<h2>".$Name."</h2>";
