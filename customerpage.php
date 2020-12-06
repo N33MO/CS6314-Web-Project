@@ -110,7 +110,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
         <div class="container">
             <?php
-            session_start();
+            if (!isset($_SESSION)) {
+                session_start();
+            }
+
             // for paging
             if (isset($_GET['pageno'])) {
                 $pageno = $_GET['pageno'];
