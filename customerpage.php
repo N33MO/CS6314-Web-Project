@@ -72,7 +72,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link" href="#">About</a>
                 </li>
             </ul>
-            <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
+            <p><?php echo "hello,".htmlspecialchars($_SESSION["username"]); ?></p>
             <a class="btn btn-outline-success my-2 my-sm-0" href="cart.php">My cart</a>
             <a class="btn btn-outline-success my-2 my-sm-0" href="logout.php">Logout</a>
         </div>
