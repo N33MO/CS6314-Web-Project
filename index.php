@@ -64,7 +64,7 @@
                     </div>
                 </li> -->
             </ul>
-            <a class="btn btn-outline-success my-2 my-sm-0" href="login.html">Login</a>
+            <a class="btn btn-outline-success my-2 my-sm-0" href="login.php">Login</a>
         </div>
     </nav>
 
@@ -98,7 +98,7 @@
 
         <div class="container">
             <?php 
-                session_start();
+                // session_start();
                 // for paging
                 if (isset($_GET['pageno'])) {
                     $pageno = $_GET['pageno'];
