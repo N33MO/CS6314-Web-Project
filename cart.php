@@ -1,3 +1,11 @@
+<?php
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,7 +59,22 @@
                     <a class="nav-link" href="index.php#">About</a>
                 </li>
             </ul>
-            <a class="btn btn-outline-success my-2 my-sm-0" href="login.html">Login</a>
+            <?php 
+                // Check if the user is logged in, if not then show login button
+                if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+                    echo "<a class='btn btn-outline-success my-2 my-sm-0' href='login.php'>Login</a>";
+                }
+                else
+                {
+                    $s = "hello," . htmlspecialchars($_SESSION["username"]);
+                    // $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='cart.php'>My cart</a>";
+                    $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='logout.php'>Logout</a>";
+                    echo $s;
+                }
+
+            
+            ?>
+
         </div>
     </nav>
 

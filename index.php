@@ -88,9 +88,6 @@ if (!isset($_SESSION)) {
 
             
             ?>
-
-
-
             
         </div>
     </nav>
