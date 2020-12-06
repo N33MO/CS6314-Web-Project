@@ -60,7 +60,7 @@
             <?php
             $account_id = 1;
             $ini = parse_ini_file("info.ini");
-            $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"]);
+            $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
             if (mysqli_connect_errno($conn)) {
                 die('Connect Error (' . $conn->connect_errno . ') '
                     . $conn->connect_error);
