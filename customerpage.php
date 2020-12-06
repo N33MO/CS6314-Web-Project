@@ -73,6 +73,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </li>
             </ul>
             <p><?php echo "hello,".htmlspecialchars($_SESSION["username"]); ?></p>
+            <!-- <?php echo "<a class='btn btn-outline-success my-2 my-sm-0' href='./cart.php?id=".$_SESSION["id"]."'>My cart</a>'>"?> -->
             <a class="btn btn-outline-success my-2 my-sm-0" href="cart.php">My cart</a>
             <a class="btn btn-outline-success my-2 my-sm-0" href="logout.php">Logout</a>
         </div>
