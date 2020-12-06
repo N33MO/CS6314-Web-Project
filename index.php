@@ -125,8 +125,6 @@ if (!isset($_SESSION)) {
 
         <div class="container">
             <?php 
-                // session_start();
-                // for paging
                 if (isset($_GET['pageno'])) {
                     $pageno = $_GET['pageno'];
                 } else {
@@ -140,7 +138,9 @@ if (!isset($_SESSION)) {
                 
                 $output = "";
                 $output = "<div class='row' id='products'>";
-                $category = $_POST['category'];
+                if (isset($_POST['category'])) {
+                    $category = $_POST['category'];
+                }
 
                 if(isset($_POST['search']))
                 {
