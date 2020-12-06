@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include "partial/header.php";?>
@@ -33,7 +37,17 @@
         </div>
 
         <div class="container">
-            <?php include "partial/products.php"; ?>
+            <?php 
+                if(isset($_GET["pageno"]))
+                {
+                    $pageno = $_GET["pageno"];
+                }
+                else
+                {
+                    $pageno = 1;
+                }
+                include "partial/products.php";
+            ?>
 
             <hr>
 
