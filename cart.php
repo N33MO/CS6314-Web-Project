@@ -63,7 +63,9 @@ if (!isset($_SESSION)) {
                         <p>Total price: <?php echo $total_price ?></p>
                     </div>
                     <div class="col-md-3">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">check out</button>
+                        <form action="place_order.php" method="POST">
+                            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="check out"/>
+                        </form>
                     </div>
                 </div>
             <?php
