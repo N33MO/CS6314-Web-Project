@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             if (!isset($_SESSION)) {
                 session_start();
             }
-            if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
                 $account_id = $_SESSION["id"];
             }
             $ini = parse_ini_file("info.ini");
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             WHERE order_detail.OrderID=$oid AND product.ProductID = order_detail.ProductID";
 
             $result = mysqli_query($conn, $sql);
-            if ($result != null && $result -> num_rows>0) {
+            if ($result != null && $result->num_rows > 0) {
             ?>
                 <table class="table">
                     <thead>
@@ -69,7 +69,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             }
             $conn->close();
             ?>
-        </div>
+            <div class="row justify-content-start">
+                <div class="col-md-4">
+                    <a class="btn btn-secondary" href="order.php">Back</a>
+                </div>
+            </div>
+        </div> <!-- <div class="container"> -->
     </main>
 
     <footer class="container">
