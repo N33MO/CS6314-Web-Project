@@ -1,0 +1,9 @@
+body {
+    padding-top: 3.5rem;
+}
+
+.item-img {
+    float: left;
+    width: 200px;
+    padding-right: 1rem;
+}
