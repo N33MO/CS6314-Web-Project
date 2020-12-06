@@ -3,7 +3,7 @@
 <?php include "partial/header.php";?>
 <body>
     <?php include "partial/navbar.php"; ?>
-
+  
     <main role="main">
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="jumbotron">

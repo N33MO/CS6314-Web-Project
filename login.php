@@ -4,7 +4,7 @@ $ini = parse_ini_file("info.ini");
 $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
 
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: customerpage.php");
+    header("location: index.php");
     exit;
 }
 

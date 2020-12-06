@@ -25,6 +25,7 @@ if ($result != null) {
     <body>
         <?php include "partial/navbar.php"; ?>
 
+
         <main>
             <div class="container">
                 <h1>Detail Page</h1>
