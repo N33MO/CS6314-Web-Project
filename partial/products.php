@@ -78,7 +78,7 @@
         mysqli_close($conn);
         echo $output;
     } 
-    elseif($_SESSION["adminloggedin"] === true) // admin interface
+    elseif(!isset($_SESSION["adminloggedin"]) || $_SESSION["adminloggedin"] === true) // admin interface
     {
         if (isset($_GET['pageno'])) {
             $pageno = $_GET['pageno'];
