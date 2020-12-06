@@ -54,7 +54,6 @@ if ($result != null) {
                         <label for="newCategory">Product category: </label>
                         <p><?php echo $row["Category"]; ?></p>                        
                         <select id="newCategory" name="newCategory">
-                            <option value="*">Any</option>
                             <option value="coffee">Coffee</option>
                             <option value="tea">Tea</option>
                             <option selected="selected"><?php echo $row["Category"]; ?></option>
