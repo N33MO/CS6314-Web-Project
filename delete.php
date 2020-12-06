@@ -15,7 +15,7 @@ if (mysqli_connect_errno($conn)) {
         . $conn->connect_error);
 }
 
-$sql = "UPDATE product SET Removed=1 WHERE ProductID=$pid";
+$sql = "UPDATE `product` SET `Removed`='1' WHERE `ProductID`='".$pid."'";
 if(mysqli_query($conn, $sql) === true)
 {
     header("Location: index.php");
