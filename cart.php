@@ -16,6 +16,7 @@ if (!isset($_SESSION)) {
 
     <main role="main">
         <div class="container">
+            <h2>Shopping Cart</h2>
             <?php
             if (!isset($_SESSION)) {
                 session_start();
@@ -29,7 +30,10 @@ if (!isset($_SESSION)) {
                 die('Connect Error (' . $conn->connect_errno . ') '
                     . $conn->connect_error);
             }
-            $sql = "SELECT Name, Price, cart_own_product.Num, product.ProductID  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
+            $sql = "SELECT Name, Price, cart_own_product.Num, product.ProductID  
+            FROM cart_own_product, product 
+            WHERE cart_own_product.AccountID=$account_id 
+            AND product.ProductID = cart_own_product.ProductID";
             $result = mysqli_query($conn, $sql);
             if ($result != null && $result -> num_rows>0) {
             ?>
