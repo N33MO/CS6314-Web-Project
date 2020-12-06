@@ -4,6 +4,7 @@
 <main>
     <div class="container">
         <?php
+        $now_date = date('Y-m-d');
         if (!isset($_SESSION)) {
             session_start();
         }
@@ -17,13 +18,56 @@
                 die('Connect Error (' . $conn->connect_errno . ') '
                     . $conn->connect_error);
             }
-            $sql = "";
+            $sql = 'SELECT MAX(`OrderID`) AS max_order_id FROM purchased_order';
             $result = mysqli_query($conn, $sql);
-            if (!$result) {
-                echo "Error.";
+            $row = mysqli_fetch_object($result);
+            $order_id = number_format($row->max_order_id) + 1;
+
+            $sql = "INSERT INTO 
+                    purchased_order (`OrderID`,`AccountID`,`PurchaseDate`, `TotalPrice`) 
+                    VALUES($order_id, $account_id, date('$now_date'), 0)";
+            $result = mysqli_query($conn, $sql);
+            if ($result == false) {
+                // echo "Failed to place order.";
+                die('Failed to place order. ' . mysqli_error($conn));
             } else {
-                echo "Records added successfully.";
+                $sql = "SELECT Name, Price, cart_own_product.Num, product.ProductID  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
+                $result = mysqli_query($conn, $sql);
+                if ($result != null && $result->num_rows > 0) {
+                    $count = 1;
+                    $total_price = 0;
+                    while ($row = $result->fetch_assoc()) {
+                        $pid = $row['ProductID'];
+                        $name = $row['Name'];
+                        $price = $row['Price'];
+                        $num = $row['Num'];
+                        $sql = "INSERT INTO 
+                        order_detail (`OrderID`,`ProductID`,`Name`,`PurchasedPrice`,`Num`) 
+                        VALUES($order_id, $pid, '$name', $price, $num)";
+                        $insert_result = mysqli_query($conn, $sql);
+                        if ($insert_result == false) {
+                            // echo "Failed to place order.";
+                            die('Failed to insert order_detail ' . mysqli_error($conn));
+                        }
+                        $total_price += $row["Price"];
+                    }
+                }
+                $sql = "UPDATE purchased_order SET TotalPrice=$total_price WHERE OrderID=$order_id";
+                $result = mysqli_query($conn, $sql);
+                if ($result == false) {
+                    // echo "Failed to update total price.";
+                    die('Failed to update total price. ' . mysqli_error($conn));
+                }
+                $sql = "DELETE FROM cart_own_product WHERE AccountID=$account_id";
+                $result = mysqli_query($conn, $sql);
+                if ($result == false) {
+                    // echo "Failed to clear shopping cart.";
+                    die('Failed to clear shopping cart. ' . mysqli_error($conn));
+                }else{
+                    echo "<p>Your order has been placed!</p>";
+                }
             }
+            $conn->close();
         }
         ?>
     </div>

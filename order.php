@@ -16,7 +16,7 @@ if (!isset($_SESSION)) {
 
     <main role="main">
         <div class="container">
-            <h2>Shopping Cart</h2>
+            <h2>Orders</h2>
             <?php
             if (!isset($_SESSION)) {
                 session_start();
@@ -30,10 +30,7 @@ if (!isset($_SESSION)) {
                 die('Connect Error (' . $conn->connect_errno . ') '
                     . $conn->connect_error);
             }
-            $sql = "SELECT Name, Price, cart_own_product.Num, product.ProductID  
-            FROM cart_own_product, product 
-            WHERE cart_own_product.AccountID=$account_id 
-            AND product.ProductID = cart_own_product.ProductID";
+            $sql = "SELECT OrderID, PurchaseDate, TotalPrice FROM purchased_order WHERE purchased_order.AccountID=$account_id";
             $result = mysqli_query($conn, $sql);
             if ($result != null && $result -> num_rows>0) {
             ?>
@@ -41,41 +38,29 @@ if (!isset($_SESSION)) {
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">name</th>
-                            <th scope="col">price</th>
-                            <th scope="col">number</th>
+                            <th scope="col">OrderID</th>
+                            <th scope="col">PurchaseDate</th>
+                            <th scope="col">TotalPrice</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $count = 1;
-                        $total_price = 0;
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr><th>" . $count . "</th>";
-                            echo "<td><a href=detail.php?pid=" . $row["ProductID"] . ">" . $row["Name"] . "</a></td>";
-                            echo "<td>" . $row["Price"] . "</td>";
-                            echo "<td>" . $row["Num"] .  "</td>";
+                            echo "<td><a href=order_detail.php?oid=" . $row["OrderID"] . ">" . $row["OrderID"] . "</a></td>";
+                            echo "<td>" . $row["PurchaseDate"] . "</td>";
+                            echo "<td>" . $row["TotalPrice"] .  "</td>";
                             echo "</tr>" . PHP_EOL;
                             $count += 1;
-                            $total_price += $row["Price"];
                         }
                         ?>
                     </tbody>
                 </table>
-                <div class="row justify-content-between">
-                    <div class="col-md-3">
-                        <p>Total price: <?php echo $total_price ?></p>
-                    </div>
-                    <div class="col-md-3">
-                        <form action="place_order.php" method="POST">
-                            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="check out"/>
-                        </form>
-                    </div>
-                </div>
             <?php
             } else {
             ?>
-                <p>Your shopping cart is empty.</p>
+                <p>Your have no order.</p>
             <?php
             }
             $conn->close();
