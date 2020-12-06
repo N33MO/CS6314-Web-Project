@@ -58,7 +58,12 @@
     <main role="main">
         <div class="container">
             <?php
-            $account_id = 1;
+            if (!isset($_SESSION)) {
+                session_start();
+            }
+            if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+                $account_id = $_SESSION["id"];
+            }
             $ini = parse_ini_file("info.ini");
             $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
             if (mysqli_connect_errno($conn)) {
@@ -67,7 +72,7 @@
             }
             $sql = "SELECT Name, Price, cart_own_product.Num, product.ProductID  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
             $result = mysqli_query($conn, $sql);
-            if ($result != null) {
+            if ($result != null && $result -> num_rows>0) {
             ?>
                 <table class="table">
                     <thead>
