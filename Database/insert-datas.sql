@@ -52,41 +52,5 @@ VALUES(
     "user2@email.com"
 );
 
-INSERT INTO `product`(
-    `ProductID`,
-    `Name`,
-    `Price`,
-    `Num`,
-    `Category`,
-    `Description`,
-    `Image`
-)
-VALUES(
-    '11',
-    'coffee1',
-    '10',
-    '30',
-    'coffee',
-    'This is coffee #1.',
-    'coffee1.jpg'
-),(
-    '12',
-    'coffee2',
-    '10',
-    '30',
-    'coffee',
-    'This is coffee #2.',
-    'coffee2.jpg'
-),
-(
-    '21',
-    'tea1',
-    '12',
-    '32',
-    'tea',
-    'This is tea #1.',
-    'tea1.jpg'
-);
-
 INSERT INTO `cart_own_product` (`AccountID`, `ProductID`, `Num`) 
 VALUES ('1', '11', '2'), ('1', '21', '1');
