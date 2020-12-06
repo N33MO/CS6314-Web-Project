@@ -215,6 +215,7 @@
                 $output .= "<div class='col-md-4'>";
                 $output .= "<h2>" . $Name . "</h2>";
                 $output .= "<img class='item-img' src='img/" . $Image . "' alt='" . $Name . "'>";
+                $output .= "<p>$".$Price."</p>";
                 $output .= "<p>" . $Description . "</p>";
                 $output .= "<p><a class='btn btn-secondary' href='./detail.php?pid=" . $ProductID . "' role='button'>View details &raquo;</a></p>
                     </div>";
