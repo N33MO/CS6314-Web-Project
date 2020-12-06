@@ -52,9 +52,11 @@ session_start();
             <hr>
 
         </div> <!-- /container -->
+        
 
-        <ul class="pagination">
-            <li><a href="?pageno=1">First</a></li>
+        <div style="text-align: center;margin: auto;">
+        <ul class="pagination" style="justify-content: center;">
+            <li><a href="?pageno=1">First</a></li>&nbsp|&nbsp
             <li class="<?php if ($pageno <= 1) {
                             echo 'disabled';
                         } ?>">
@@ -75,9 +77,11 @@ session_start();
                             } else {
                                 echo "?pageno=" . ($pageno + 1);
                             } ?>">Next</a>
-            </li>
+            </li>&nbsp|&nbsp
             <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
         </ul>
+        </div>
+        
 
     </main>
 

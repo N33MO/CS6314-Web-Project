@@ -226,9 +226,9 @@
         $paginglist = "";
         for($x=1; $x <= $total_pages; $x++)
         {
-            $paginglist .= "  <li><a href='?pageno=".$x."'>Page ".$x."</a></li>  ";
+            $paginglist .= "&nbsp|&nbsp<li><a href='?pageno=".$x."'>Page ".$x."</a></li>";
         }
-
+        $paginglist .= "&nbsp|&nbsp";
 
         echo $output;
     }
