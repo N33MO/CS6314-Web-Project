@@ -1,5 +1,5 @@
-
 INSERT INTO `user`(
+    `AccountID`,
     `Fname`,
     `Lname`,
     `UserName`,
@@ -38,6 +38,3 @@ VALUES(
     '2094889205',
     'customer02@email.com'
 );
-
-INSERT INTO `cart_own_product` (`AccountID`, `ProductID`, `Num`) 
-VALUES ('1', '11', '2'), ('1', '21', '1');
