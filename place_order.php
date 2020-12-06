@@ -43,8 +43,12 @@
                         $num = $row['Num'];
                         $sql = "INSERT INTO 
                         order_detail (`OrderID`,`ProductID`,`Name`,`PurchasedPrice`,`Num`) 
-                        VALUES($order_id, $pid, $name, $price, $num) 
-                        ON DUPLICATE KEY UPDATE Num = Num+1";
+                        VALUES($order_id, $pid, '$name', $price, $num)";
+                        $insert_result = mysqli_query($conn, $sql);
+                        if ($insert_result == false) {
+                            // echo "Failed to place order.";
+                            die('Failed to insert order_detail ' . mysqli_error($conn));
+                        }
                         $total_price += $row["Price"];
                     }
                 }
