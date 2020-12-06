@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         $count = 1;
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr><th>" . $count . "</th>";
-                            echo "<td><a href=detail.php?oid=" . $row["ProductID"] . ">" . $row["Name"] . "</a></td>";
+                            echo "<td><a href=detail.php?pid=" . $row["ProductID"] . ">" . $row["Name"] . "</a></td>";
                             echo "<td>" . $row["Num"] . "</td>";
                             echo "<td>" . $row["PurchasedPrice"] .  "</td>";
                             echo "</tr>" . PHP_EOL;
