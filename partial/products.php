@@ -1,5 +1,7 @@
 <?php
-    session_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
     if (isset($_GET['pageno'])) {
         $pageno = $_GET['pageno'];
     } else {
@@ -80,7 +82,13 @@
         
         $output .= "</div>";
         mysqli_close($conn);
-        echo $output;
+        echo $output;        
+        $paginglist = "";
+        for($x=1; $x <= $total_pages; $x++)
+        {
+            $paginglist .= "&nbsp|&nbsp<li><a href='?pageno=".$x."'>Page ".$x."</a></li>";
+        }
+        $paginglist .= "&nbsp|&nbsp";
     } 
     elseif(isset($_SESSION["adminloggedin"]) && $_SESSION["adminloggedin"] === true) // admin interface
     {
@@ -152,6 +160,12 @@
         
         $output .= "</div>";
         mysqli_close($conn);
+        $paginglist = "";
+        for($x=1; $x <= $total_pages; $x++)
+        {
+            $paginglist .= "&nbsp|&nbsp<li><a href='?pageno=".$x."'>Page ".$x."</a></li>";
+        }
+        $paginglist .= "&nbsp|&nbsp";
         echo $output;
     }
     else // customer interface
@@ -233,7 +247,3 @@
 
         echo $output;
     }
-
-
-
-?>

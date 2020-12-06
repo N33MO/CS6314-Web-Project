@@ -1,13 +1,16 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include "partial/header.php";?>
+<?php include "partial/header.php"; ?>
+
 <body>
     <?php include "partial/navbar.php"; ?>
-  
+
     <main role="main">
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="jumbotron">
@@ -37,51 +40,50 @@ session_start();
         </div>
 
         <div class="container">
-            <?php 
-                if(isset($_GET["pageno"]))
-                {
-                    $pageno = $_GET["pageno"];
-                }
-                else
-                {
-                    $pageno = 1;
-                }
-                include "partial/products.php";
+            <?php
+
+            $paginglist = "";
+            if (isset($_GET["pageno"])) {
+                $pageno = $_GET["pageno"];
+            } else {
+                $pageno = 1;
+            }
+            include "partial/products.php";
             ?>
 
             <hr>
 
         </div> <!-- /container -->
-        
+
 
         <div style="text-align: center;margin: auto;">
-        <ul class="pagination" style="justify-content: center;">
-            <li><a href="?pageno=1">First</a></li>&nbsp|&nbsp
-            <li class="<?php if ($pageno <= 1) {
-                            echo 'disabled';
-                        } ?>">
-                <a href="<?php if ($pageno <= 1) {
-                                echo '#';
-                            } else {
-                                echo "?pageno=" . ($pageno - 1);
-                            } ?>">Prev</a>
-            </li>
-            <?php
+            <ul class="pagination" style="justify-content: center;">
+                <li><a href="?pageno=1">First</a></li>&nbsp|&nbsp
+                <li class="<?php if ($pageno <= 1) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno <= 1) {
+                                    echo '#';
+                                } else {
+                                    echo "?pageno=" . ($pageno - 1);
+                                } ?>">Prev</a>
+                </li>
+                <?php
                 echo $paginglist;
-            ?>
-            <li class="<?php if ($pageno >= $total_pages) {
-                            echo 'disabled';
-                        } ?>">
-                <a href="<?php if ($pageno >= $total_pages) {
-                                echo '#';
-                            } else {
-                                echo "?pageno=" . ($pageno + 1);
-                            } ?>">Next</a>
-            </li>&nbsp|&nbsp
-            <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
-        </ul>
+                ?>
+                <li class="<?php if ($pageno >= $total_pages) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno >= $total_pages) {
+                                    echo '#';
+                                } else {
+                                    echo "?pageno=" . ($pageno + 1);
+                                } ?>">Next</a>
+                </li>&nbsp|&nbsp
+                <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+            </ul>
         </div>
-        
+
 
     </main>
 
