@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
         $sql = "INSERT INTO cart_own_product (`AccountID`,`ProductID`,`Num`) VALUES($account_id, $pid, 1) ON DUPLICATE KEY UPDATE Num = Num+1";
         $result = mysqli_query($conn, $sql);
-
-        header("Location: detail.php?pid=$pid&msg=ok");
     }
 }
+
+header("Location: detail.php?pid=$pid");

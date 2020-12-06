@@ -8,10 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     } else {
         header("Location: index.php");
     }
-    // if ($_GET["msg"]) {
-    //     $msg = $_GET['msg'];
-    //     echo '<script>alert("' . $msg . '")</script>';
-    // }
 }
 
 $ini = parse_ini_file("info.ini");
