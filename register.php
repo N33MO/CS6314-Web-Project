@@ -28,7 +28,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else
     {
-        $sql = "SELECT AccountID FROM customer WHERE UserName=?";
+        $sql = "SELECT AccountID FROM user WHERE UserName=?";
         if($stmt = mysqli_prepare($conn, $sql))
         {
             mysqli_stmt_bind_param($stmt, "s", $param_username);
@@ -36,13 +36,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             if(mysqli_stmt_execute($stmt))
             {
                 mysqli_stmt_store_result($stmt);
-                if(mysqli_stmt_num_rows($stmt) == 1)
+                if(mysqli_stmt_num_rows($stmt) > 0)
                 {
                     $username_err = "This username is already taken.";
                 }
                 else
                 {
-                    $username = trim($_POST['inputUsername']);
+                    $username = $param_username;
                 }
             }
             else
@@ -86,7 +86,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else
     {
-        $sql = "SELECT AccountID FROM customer WHERE Email=?";
+        $sql = "SELECT AccountID FROM user WHERE Email=?";
         if($stmt = mysqli_prepare($conn, $sql))
         {
             mysqli_stmt_bind_param($stmt, "s", $param_email);
@@ -151,7 +151,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
     if(empty($username_err) && empty($password_err) && empty($email_err) && empty($fname_err) && empty($lname_err) && empty($phonenumber_err))
     {
-        $sql = "INSERT INTO `admin` (`Fname`, `Lname`, `UserName`, `Password`, `Phone`, `Email`) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO `user` (`Fname`, `Lname`, `UserName`, `Password`, `Phone`, `Email`) VALUES (?, ?, ?, ?, ?, ?)";
+        
         if($stmt = mysqli_prepare($conn, $sql))
         {
             mysqli_stmt_bind_param($stmt, "ssssss", $param_fname, $param_lname, $param_username, $param_hash_password, $param_phonenumber, $param_email);
@@ -161,7 +162,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             $param_hash_password = password_hash($password, PASSWORD_DEFAULT);
             $param_phonenumber = $phonenumber;
             $param_email = $email;
-
             if(mysqli_stmt_execute($stmt))
             {
                 header("Location: login.php");
@@ -172,6 +172,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 echo "3 Something went wrong. Please try again later.";
             }
             mysqli_stmt_close($stmt);
+        }else{
+            echo "something went wrong...";
         }
     }
     mysqli_close($conn);
