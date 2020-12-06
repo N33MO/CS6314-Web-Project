@@ -67,7 +67,7 @@ if ($result != null) {
                         <a class="nav-link" href="index.php#">About</a>
                     </li>
                 </ul>
-                <a class="btn btn-outline-success my-2 my-sm-0" href="login.html">Login</a>
+                <a class="btn btn-outline-success my-2 my-sm-0" href="login.php">Login</a>
             </div>
         </nav>
 
