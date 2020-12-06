@@ -12,15 +12,4 @@
     <script src="js/index.js"></script>
 
     <title>Web Final Project</title>
-    <style>
-        body {
-            padding-top: 3.5rem;
-        }
-
-        .item-img {
-            /* float: left; */
-            max-width: 300px;
-            padding-right: 1rem;
-        }
-    </style>
 </head>
