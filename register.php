@@ -151,7 +151,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
     if(empty($username_err) && empty($password_err) && empty($email_err) && empty($fname_err) && empty($lname_err) && empty($phonenumber_err))
     {
-        $sql = "INSERT INTO `customer` (`Fname`, `Lname`, `UserName`, `Password`, `Phone`, `Email`) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO `admin` (`Fname`, `Lname`, `UserName`, `Password`, `Phone`, `Email`) VALUES (?, ?, ?, ?, ?, ?)";
         if($stmt = mysqli_prepare($conn, $sql))
         {
             mysqli_stmt_bind_param($stmt, "ssssss", $param_fname, $param_lname, $param_username, $param_hash_password, $param_phonenumber, $param_email);

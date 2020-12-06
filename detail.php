@@ -39,6 +39,7 @@ if ($result != null) {
                         <p><a class="btn btn-secondary" href="add_cart.php?pid=<?php echo $pid; ?>">Add to Cart</a></p>
                     </div>
                 </div>
+                <p><a class="btn btn-secondary" href="index.php">Back</a></p>
             </div>
         </main>
         <footer class="container">

@@ -26,9 +26,18 @@ if (!isset($_SESSION)) {
         </ul>
         <?php
         // Check if the user is logged in, if not then show login button
-        if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+        if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) 
+        {
             echo "<a class='btn btn-outline-success my-2 my-sm-0' href='login.php'>Login</a>";
-        } else {
+        } 
+        elseif($_SESSION["adminloggedin"] === true)
+        {
+            $s = "hello, admin " . htmlspecialchars($_SESSION["username"]);
+            $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='logout.php'>Logout</a>";
+            echo $s;
+        }
+        else 
+        {
             $s = "hello," . htmlspecialchars($_SESSION["username"]);
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='order.php'>Orders</a>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='cart.php'>Cart</a>";
