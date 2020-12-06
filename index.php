@@ -64,6 +64,9 @@ session_start();
                                 echo "?pageno=" . ($pageno - 1);
                             } ?>">Prev</a>
             </li>
+            <?php
+                echo $paginglist;
+            ?>
             <li class="<?php if ($pageno >= $total_pages) {
                             echo 'disabled';
                         } ?>">

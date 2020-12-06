@@ -9,7 +9,7 @@
     $offset = ($pageno - 1) * $no_of_records_per_page;
 
     $ini = parse_ini_file("info.ini");
-    $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database customer");
+    $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
         
 
     if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) // guest interface
@@ -223,6 +223,13 @@
         
         $output .= "</div>";
         mysqli_close($conn);
+        $paginglist = "";
+        for($x=1; $x <= $total_pages; $x++)
+        {
+            $paginglist .= "  <li><a href='?pageno=".$x."'>Page ".$x."</a></li>  ";
+        }
+
+
         echo $output;
     }
 
