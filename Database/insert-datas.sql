@@ -1,27 +1,30 @@
 
-INSERT INTO `admin`(
+INSERT INTO `user`(
     `AccountID`,
     `Fname`,
     `Lname`,
     `UserName`,
-    `Password`
+    `Password`,
+    `Category`
 )
 VALUES(
-    '1',
+    '11',
     'Admin01_F',
     'Admin01_L',
     'admin01',
-    '123456789'
+    '123456789',
+    '1'
 ),
 (
-    '2',
+    '12',
     'Admin02_F',
     'Admin02_L',
     'admin02',
-    '123456789'
+    '123456789',
+    '1'
 );
 
-INSERT INTO `customer`(
+INSERT INTO `user`(
     `AccountID`,
     `Fname`,
     `Lname`,
@@ -31,7 +34,7 @@ INSERT INTO `customer`(
     `Email`
 )
 VALUES(
-    '1',
+    '21',
     'Customer01_F',
     'Customer01_L',
     'customer01',
@@ -40,7 +43,7 @@ VALUES(
     'user1@email.com'
 ),
 (
-    '2',
+    '22',
     'Customer02_F',
     'Customer02_L',
     'customer02',
