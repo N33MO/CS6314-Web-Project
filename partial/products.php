@@ -148,8 +148,8 @@
                 $output .= "<h2>" . $Name . "</h2>";
                 $output .= "<img class='item-img' src='img/" . $Image . "' alt='" . $Name . "'>";
                 $output .= "<p>" . $Description . "</p>";
-                $output .= "<p><a class='btn btn-secondary' href='./detail.php?pid=" . $ProductID . "' role='button'>View details &raquo;</a></p>";
-                $output .= "<p><a class='btn btn-secondary' href='./detail.php?pid=" . $ProductID . "' role='button'>Delete &raquo;</a></p></div>";
+                $output .= "<p><a class='btn btn-secondary' href='./delete.php?pid=" . $ProductID . "' role='button'>Update &raquo;</a></p>";
+                $output .= "<p><a class='btn btn-danger' href='./update.php?pid=" . $ProductID . "' role='button'>Delete &raquo;</a></p></div>";
             }
         }
         
