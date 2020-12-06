@@ -1,9 +1,15 @@
 <?php
 session_start();
-if(!isset($_SESSION['user']))
-{
-    header("Location: index.php");
+
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: index.php");
+    exit;
 }
+// if(!isset($_SESSION['user']))
+// {
+//     header("Location: index.php");
+// }
 // if(isset($_GET['logout']) == 'yes')
 // {
 //     session_destroy();
@@ -66,8 +72,9 @@ if(!isset($_SESSION['user']))
                     <a class="nav-link" href="#">About</a>
                 </li>
             </ul>
+            <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
             <a class="btn btn-outline-success my-2 my-sm-0" href="cart.php">My cart</a>
-            <a class="btn btn-outline-success my-2 my-sm-0" href="index.php">Logout</a>
+            <a class="btn btn-outline-success my-2 my-sm-0" href="logout.php">Logout</a>
         </div>
     </nav>
 

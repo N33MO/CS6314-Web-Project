@@ -7,19 +7,28 @@ $password_err = "";
 $email_err = "";
 $fname_err = "";
 $lname_err = "";
-$phonebumber_err = "";
+$phonenumber_err = "";
 $confirm_password_err = "";
 
-if(!empty($_POST))
+$username = "";
+$password = "";
+$email = "";
+$fname = "";
+$lname = "";
+$phonenumber = "";
+$confirm_password = "";
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST")
 {
     // input username
-    if(trim($_POST['inputUsername']))
+    if(empty(trim($_POST['inputUsername'])))
     {
         $username_err = "This field cannot be empty.";
     }
     else
     {
-        $sql = "SELECT id FROM customer WHERE UserName=?";
+        $sql = "SELECT AccountID FROM customer WHERE UserName=?";
         if($stmt = mysqli_prepare($conn, $sql))
         {
             mysqli_stmt_bind_param($stmt, "s", $param_username);
@@ -27,9 +36,9 @@ if(!empty($_POST))
             if(mysqli_stmt_execute($stmt))
             {
                 mysqli_stmt_store_result($stmt);
-                if(mysqli_stmt_num_rows($stmt) != 0)
+                if(mysqli_stmt_num_rows($stmt) == 1)
                 {
-                    $username_err = "This username is already taken";
+                    $username_err = "This username is already taken.";
                 }
                 else
                 {
@@ -38,7 +47,8 @@ if(!empty($_POST))
             }
             else
             {
-                echo "Something went wrong. Please try again later.";
+                // echo $stmt;
+                echo "1 Something went wrong. Please try again later.";
             }
             mysqli_stmt_close($stmt);
         }
@@ -76,7 +86,7 @@ if(!empty($_POST))
     }
     else
     {
-        $sql = "SELECT id FROM customer WHERE Email=?";
+        $sql = "SELECT AccountID FROM customer WHERE Email=?";
         if($stmt = mysqli_prepare($conn, $sql))
         {
             mysqli_stmt_bind_param($stmt, "s", $param_email);
@@ -84,7 +94,7 @@ if(!empty($_POST))
             if(mysqli_stmt_execute($stmt))
             {
                 mysqli_stmt_store_result($stmt);
-                if(mysqli_stmt_num_rows($stmt) != 0)
+                if(mysqli_stmt_num_rows($stmt) == 1)
                 {
                     $email_err = "This email is already registed";
                 }
@@ -95,7 +105,8 @@ if(!empty($_POST))
             }
             else
             {
-                echo "Something went wrong. Please try again later.";
+                // echo $stmt;
+                echo "2 Something went wrong. Please try again later.";
             }
             mysqli_stmt_close($stmt);
         }
@@ -128,9 +139,9 @@ if(!empty($_POST))
     {
         $phonenumber_err = "This field cannot be empty.";
     }
-    elseif(strlen(trim($_POST['inputPhonenumber'])) < 10 || strlen(trim($_POST['inputPhonenumber'])) > 10)
+    elseif(strlen(trim($_POST['inputPhonenumber'])) != 10)
     {
-        $phonebumber_err = "Please check your phone number again";
+        $phonenumber_err = "Please check your phone number again";
     }
     // add more validation chack
     else
@@ -138,19 +149,12 @@ if(!empty($_POST))
         $phonenumber = trim($_POST['inputPhonenumber']);
     }
 
-
-    // $email = trim($_POST['inputEmail']);
-    // $password = $_POST['inputPassword'];
-    // $fname = trim($_POST['inputFname']);
-    // $lname = trim($_POST['inputLname']); 
-    // $phonenumber = trim($_POST['inputPhonenumber']);
-
-    if(empty($username_err) && empty($password_err) && empty($email_err) && empty($fname_err) && empty($lname_err) && empty($phonebumber_err))
+    if(empty($username_err) && empty($password_err) && empty($email_err) && empty($fname_err) && empty($lname_err) && empty($phonenumber_err))
     {
         $sql = "INSERT INTO `customer` (`Fname`, `Lname`, `UserName`, `Password`, `Phone`, `Email`) VALUES (?, ?, ?, ?, ?, ?)";
         if($stmt = mysqli_prepare($conn, $sql))
         {
-            mysqli_stmt_bind_param($stmt, "ss", $param_fname, $param_lname, $param_username, $param_hash_password, $param_phonenumber, $param_email);
+            mysqli_stmt_bind_param($stmt, "ssssss", $param_fname, $param_lname, $param_username, $param_hash_password, $param_phonenumber, $param_email);
             $param_fname = $fname;
             $param_lname = $lname;
             $param_username = $username;
@@ -164,7 +168,8 @@ if(!empty($_POST))
             }
             else
             {
-                echo "Something went wrong. Please try again later.";
+                // echo $stmt;
+                echo "3 Something went wrong. Please try again later.";
             }
             mysqli_stmt_close($stmt);
         }
@@ -209,12 +214,12 @@ if(!empty($_POST))
                 <input type="text" name="inputEmail" class="form-control" value="<?php echo $email; ?>">
                 <span class="help-block"><?php echo $email_err; ?></span>
             </div> 
-            <div class="form-group <?php echo (!empty($fanme_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group <?php echo (!empty($fname_err)) ? 'has-error' : ''; ?>">
                 <label>First name</label>
                 <input type="text" name="inputFname" class="form-control" value="<?php echo $fname; ?>">
                 <span class="help-block"><?php echo $fname_err; ?></span>
             </div> 
-            <div class="form-group <?php echo (!empty($lanme_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group <?php echo (!empty($lname_err)) ? 'has-error' : ''; ?>">
                 <label>Last name</label>
                 <input type="text" name="inputLname" class="form-control" value="<?php echo $lname; ?>">
                 <span class="help-block"><?php echo $lname_err; ?></span>
@@ -222,7 +227,7 @@ if(!empty($_POST))
             <div class="form-group <?php echo (!empty($phonenumber_err)) ? 'has-error' : ''; ?>">
                 <label>Phone number</label>
                 <input type="text" name="inputPhonenumber" class="form-control" value="<?php echo $phonenumber; ?>">
-                <span class="help-block"><?php echo $phonebumber_err; ?></span>
+                <span class="help-block"><?php echo $phonenumber_err; ?></span>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
