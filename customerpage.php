@@ -128,7 +128,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
             $output = "";
             $output = "<div class='row' id='products'>";
-            $category = $_POST['category'];
+            if (isset($_POST['category'])) {
+                $category = $_POST['category'];
+            }
 
             if (isset($_POST['search'])) {
                 $total_pages_sql = "SELECT COUNT(*) FROM product WHERE ";
