@@ -39,7 +39,11 @@ if ($result != null) {
                         <p><a class="btn btn-secondary" href="add_cart.php?pid=<?php echo $pid; ?>">Add to Cart</a></p>
                     </div>
                 </div>
-                <p><a class="btn btn-secondary" href="index.php">Back</a></p>
+                <div class="row justify-content-start">
+                    <div class="col-md-4">
+                        <a class="btn btn-secondary" href="index.php">Back</a>
+                    </div>
+                </div>
             </div>
         </main>
         <footer class="container">
@@ -52,7 +56,7 @@ if ($result != null) {
 
     </body>
 <?php
-$conn->close();
+    $conn->close();
 }
 ?>
 

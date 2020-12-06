@@ -44,6 +44,7 @@ if (!isset($_SESSION)) {
                             <th scope="col">name</th>
                             <th scope="col">price</th>
                             <th scope="col">number</th>
+                            <th scope="col">remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,6 +56,7 @@ if (!isset($_SESSION)) {
                             echo "<td><a href=detail.php?pid=" . $row["ProductID"] . ">" . $row["Name"] . "</a></td>";
                             echo "<td>" . $row["Price"] . "</td>";
                             echo "<td>" . $row["Num"] .  "</td>";
+                            echo "<td><a href=remove_cart.php?pid=" . $row["ProductID"] . ">remove</a></td>";
                             echo "</tr>" . PHP_EOL;
                             $count += 1;
                             $total_price += $row["Price"];
