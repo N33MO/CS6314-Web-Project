@@ -93,6 +93,7 @@
         
         $output = "";
         $output = "<div class='row' id='products'>";
+        $output .= "<p><a class='btn btn-secondary' href='./add.php' role='button'>Add new item &raquo;</a></p>";
         if (isset($_POST['category'])) {
             $category = $_POST['category'];
         }

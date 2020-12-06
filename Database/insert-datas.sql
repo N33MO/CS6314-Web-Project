@@ -1,55 +1,42 @@
 
 INSERT INTO `user`(
-    `AccountID`,
     `Fname`,
     `Lname`,
     `UserName`,
     `Password`,
-    `Category`
-)
-VALUES(
-    '11',
-    'Admin01_F',
-    'Admin01_L',
-    'admin01',
-    '123456789',
-    '1'
-),
-(
-    '12',
-    'Admin02_F',
-    'Admin02_L',
-    'admin02',
-    '123456789',
-    '1'
-);
-
-INSERT INTO `user`(
-    `AccountID`,
-    `Fname`,
-    `Lname`,
-    `UserName`,
-    `Password`,
+    `Category`,
     `Phone`,
     `Email`
 )
 VALUES(
-    '21',
-    'Customer01_F',
-    'Customer01_L',
+    '1',
+    'Lowe',
+    'James',
     'customer01',
-    '1111111111',
-    NULL,
-    'user1@email.com'
+    '$2y$10$YkMnsTdmf5AOe9Xlzi1wRemPtajLpUi86MrR/WlL.pu.fxdWBv7i6',
+    '0',
+    '8473945601',
+    'customer01@email.com'
 ),
 (
-    '22',
-    'Customer02_F',
-    'Customer02_L',
-    'customer02',
-    '2222222222',
-    NULL,
-    "user2@email.com"
+    '2',
+    'Smith',
+    'John',
+    'admin01',
+    '$2y$10$QFe7Ein6hcKefJDMXM5QCeGQPOs5MtK7.j3S6SfGO6Lc9ljLsKVL.',
+    '1',
+    '5647290748',
+    'admin01@email.com'
+),
+(
+    '3',
+    'Burke',
+    'Stephen',
+    'customer03',
+    '$2y$10$2dvq527qCuOytnJlBxYcm.WbObEf6AF94zpVjDGNfBiLZA5SxNTaW',
+    '0',
+    '2094889205',
+    'customer02@email.com'
 );
 
 INSERT INTO `cart_own_product` (`AccountID`, `ProductID`, `Num`) 
