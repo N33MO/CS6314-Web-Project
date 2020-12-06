@@ -19,8 +19,8 @@
         }
         
         if (isset($_POST['search'])) {
-            $total_pages_sql = "SELECT COUNT(*) FROM product WHERE ";
-            $sql = "SELECT * FROM product WHERE ";
+            $total_pages_sql = "SELECT COUNT(*) FROM product WHERE Removed<>'1' AND ";
+            $sql = "SELECT * FROM product WHERE Removed<>'1' AND ";
             $s = "";
         
             $search_query = $_POST['search'];
@@ -45,8 +45,8 @@
             $search_result = mysqli_query($conn, $sql) or die("cannot search");
             $r = mysqli_num_rows($search_result);
         } else {
-            $total_pages_sql = "SELECT COUNT(*) FROM product";
-            $sql = "SELECT * FROM product";
+            $total_pages_sql = "SELECT COUNT(*) FROM product WHERE Removed<>'1'";
+            $sql = "SELECT * FROM product WHERE Removed<>'1'";
         
             $result = mysqli_query($conn, $total_pages_sql);
             $total_rows = mysqli_fetch_array($result)[0];
@@ -78,7 +78,7 @@
         mysqli_close($conn);
         echo $output;
     } 
-    elseif(!isset($_SESSION["adminloggedin"]) || $_SESSION["adminloggedin"] === true) // admin interface
+    elseif(isset($_SESSION["adminloggedin"]) && $_SESSION["adminloggedin"] === true) // admin interface
     {
         if (isset($_GET['pageno'])) {
             $pageno = $_GET['pageno'];
@@ -91,16 +91,17 @@
         $ini = parse_ini_file("info.ini");
         $conn = mysqli_connect($ini["servername"], $ini["username"], $ini["password"], $ini["dbname"], $ini["portid"]) or die("cannot connect to database");
         
-        $output = "";
-        $output = "<div class='row' id='products'>";
-        $output .= "<p><a class='btn btn-secondary' href='./add.php' role='button'>Add new item &raquo;</a></p>";
+        $output = "<div><a class='btn btn-secondary' href='./add.php' role='button'>Add new item &raquo;</a></div>";
+
+        $output .= "<div class='row' id='products'>";
+        // $output .= "<p><a class='btn btn-secondary' href='./add.php' role='button'>Add new item &raquo;</a></p>";
         if (isset($_POST['category'])) {
             $category = $_POST['category'];
         }
         
         if (isset($_POST['search'])) {
-            $total_pages_sql = "SELECT COUNT(*) FROM product WHERE ";
-            $sql = "SELECT * FROM product WHERE ";
+            $total_pages_sql = "SELECT COUNT(*) FROM product WHERE Removed<>'1' AND ";
+            $sql = "SELECT * FROM product WHERE Removed<>'1' AND ";
             $s = "";
         
             $search_query = $_POST['search'];
@@ -125,8 +126,8 @@
             $search_result = mysqli_query($conn, $sql) or die("cannot search");
             $r = mysqli_num_rows($search_result);
         } else {
-            $total_pages_sql = "SELECT COUNT(*) FROM product";
-            $sql = "SELECT * FROM product";
+            $total_pages_sql = "SELECT COUNT(*) FROM product WHERE Removed<>'1'";
+            $sql = "SELECT * FROM product WHERE Removed<>'1'";
         
             $result = mysqli_query($conn, $total_pages_sql);
             $total_rows = mysqli_fetch_array($result)[0];
@@ -149,8 +150,8 @@
                 $output .= "<h2>" . $Name . "</h2>";
                 $output .= "<img class='item-img' src='img/" . $Image . "' alt='" . $Name . "'>";
                 $output .= "<p>" . $Description . "</p>";
-                $output .= "<p><a class='btn btn-secondary' href='./delete.php?pid=" . $ProductID . "' role='button'>Update &raquo;</a></p>";
-                $output .= "<p><a class='btn btn-danger' href='./update.php?pid=" . $ProductID . "' role='button'>Delete &raquo;</a></p></div>";
+                $output .= "<p><a class='btn btn-secondary' href='./update.php?pid=" . $ProductID . "' role='button'>Update &raquo;</a></p>";
+                $output .= "<p><a class='btn btn-danger' href='./delete.php?pid=" . $ProductID . "' role='button'>Delete &raquo;</a></p></div>";
             }
         }
         
@@ -178,8 +179,8 @@
         }
         
         if (isset($_POST['search'])) {
-            $total_pages_sql = "SELECT COUNT(*) FROM product WHERE ";
-            $sql = "SELECT * FROM product WHERE ";
+            $total_pages_sql = "SELECT COUNT(*) FROM product WHERE Removed<>'1' AND  ";
+            $sql = "SELECT * FROM product WHERE Removed<>'1' AND ";
             $s = "";
         
             $search_query = $_POST['search'];
@@ -204,8 +205,8 @@
             $search_result = mysqli_query($conn, $sql) or die("cannot search");
             $r = mysqli_num_rows($search_result);
         } else {
-            $total_pages_sql = "SELECT COUNT(*) FROM product";
-            $sql = "SELECT * FROM product";
+            $total_pages_sql = "SELECT COUNT(*) FROM product WHERE Removed<>'1'";
+            $sql = "SELECT * FROM product WHERE Removed<>'1'";
         
             $result = mysqli_query($conn, $total_pages_sql);
             $total_rows = mysqli_fetch_array($result)[0];

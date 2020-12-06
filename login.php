@@ -30,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
     if(empty($username_err) && empty($password_err))
     {
-        $sql = "SELECT AccountID, UserName, Password FROM customer WHERE UserName=?";
+        $sql = "SELECT AccountID, UserName, Password, Category FROM user WHERE UserName=?";
 
         if($stmt = mysqli_prepare($conn, $sql))
         {
@@ -41,21 +41,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 mysqli_stmt_store_result($stmt);
                 if(mysqli_stmt_num_rows($stmt) == 1)
                 {
-                    mysqli_stmt_bind_result($stmt, $id, $username, $mypassword);
+                    mysqli_stmt_bind_result($stmt, $id, $username, $mypassword, $category);
                     if(mysqli_stmt_fetch($stmt))
                     {
                         if(password_verify($password, $mypassword))
                         {
-                            session_start();
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;
-                            header("Location: index.php");
+                            if($category == "0") // custome
+                            {
+                                session_start();
+                                $_SESSION["loggedin"] = true;
+                                $_SESSION["id"] = $id;
+                                $_SESSION["username"] = $username;
+                                header("Location: index.php");
+                            }
+                            elseif($category == "1") // admin
+                            {
+                                session_start();
+                                $_SESSION["adminloggedin"] = true;
+                                $_SESSION["loggedin"] = true;
+                                $_SESSION["id"] = $id;
+                                $_SESSION["username"] = $username;
+                                header("Location: index.php");
+                            }
+                            else
+                            {
+                                echo "unknown user category";
+                            }
+                            
 
                         }
                         else
                         {
-                            $password_err = "Invalid username or password.";
+                            $username_err = "Invalid username or password.";
                         }
                     }
                     else
@@ -66,47 +83,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 }
                 else
                 {
-                    $sql = "SELECT AccountID, UserName, Password FROM admin WHERE UserName=?";
-                    if($stmt = mysqli_prepare($conn, $sql))
-                    {
-                        mysqli_stmt_bind_param($stmt, "s", $param_username);
-                        $param_username = $username;
-                        if(mysqli_stmt_execute($stmt))
-                        {
-                            mysqli_stmt_store_result($stmt);
-                            if(mysqli_stmt_num_rows($stmt) == 1)
-                            {
-                                mysqli_stmt_bind_result($stmt, $id, $username, $mypassword);
-                                if(mysqli_stmt_fetch($stmt))
-                                {
-                                    if(password_verify($password, $mypassword))
-                                    {
-                                        session_start();
-                                        $_SESSION["adminloggedin"] = true;
-                                        $_SESSION["loggedin"] = true;
-                                        $_SESSION["id"] = $id;
-                                        $_SESSION["username"] = $username;
-                                        header("Location: index.php");
-
-                                    }
-                                    else
-                                    {
-                                        $password_err = "Invalid username or password.";
-                                    }
-                                }
-                                else
-                                {
-                                    $username_err = "Invalid username or password.";
-                                }
-                            }
-                            else
-                            {
-                                mysqli_stmt_close($stmt);
-                            }
-                        }
-                    }
+                    $username_err = "Invalid username or password.";
+                    
                 }
             }
+            mysqli_stmt_close($stmt);
         }
         
     }

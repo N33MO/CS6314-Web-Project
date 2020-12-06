@@ -32,24 +32,36 @@ if ($result != null) {
                 <h1>Update item</h1>
                 <div class="row justify-content-center" id="coffee-row">
                     <form action="updatedatabase.php" method="post" class="col-md-4">
-                        <textarea readonly name="id"><?php echo $pid?></textarea>
+                        <label for="id">Product ID (not editable): </label>
+                        <input readonly name="id" id="id" value=<?php echo $pid?>>
+
+                        <label for="newImage">Product image file name: </label>
                         <img class="item-img" src="img/<?php echo $row["Image"]; ?>" alt="<?php echo $row["Image"]; ?>">
-                        <textarea name="newImage"><?php echo $row["Image"]; ?></textarea>
-                        <h2><?php echo $row["Name"]; ?></h2>
-                        <textarea name="newName"><?php echo $row["Name"]; ?></textarea>
+                        <input name="newImage" id="newImage" value=<?php echo $row["Image"]; ?>>
+
+                        <label for="newName">Product name: </label>
+                        <p><?php echo $row["Name"]; ?></p>
+                        <input name="newName" id="newName" value=<?php echo $row["Name"]; ?>>
+
+                        <label for="newDescription">Product description: </label>
                         <p><?php echo $row["Description"]; ?></p>
-                        <textarea name="newDescription"><?php echo $row["Description"]; ?></textarea>
+                        <textarea name="newDescription" id="newDescription"><?php echo $row["Description"]; ?></textarea>
+                        
+                        <label for="newNum">Product current amount: </label>
                         <p><?php echo $row["Num"]; ?></p>
-                        <textarea name="newNum"><?php echo $row["Description"]; ?></textarea>
-                        <p><?php echo $row["Category"]; ?></p>
-                        <label for="newCategory">Category</label>
+                        <input type="number" min="0" step="1" name="newNum" id="newNum" value=<?php echo $row["Num"]; ?>>
+                        
+                        <label for="newCategory">Product category: </label>
+                        <p><?php echo $row["Category"]; ?></p>                        
                         <select id="newCategory" name="newCategory">
                             <option value="*">Any</option>
                             <option value="coffee">Coffee</option>
                             <option value="tea">Tea</option>
                         </select>
+
+                        <label for="newPrice">Product price: </label>
                         <p><?php echo $row["Price"]; ?></p>
-                        <textarea name="newPrice"><?php echo $row["Price"]; ?></textarea>
+                        <input type="number" name="newPrice" id="newPrice"value=<?php echo $row["Price"]; ?>>
                         <input type="submit" value="Submit">
 
                     </form>
