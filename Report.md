@@ -142,11 +142,43 @@ Result for category="tea" and search="6", admin page
 
 ##### Frontend & Backend
 
+#####login.php, register.php, logout.php
+
+1. Provide customers and admins a portal to login.
+
+2. Let new customer to sign up. Check whether this user name is exist first. If not, insert customer's information and hashed password into database.
+
+3. Check if user's input is valid, show the error message if it's not. For example, valid password is at least 8 characters.
+
+4. Logout after the user finish, destory the session and empty the cookies.
+
+#####index.php, navbar.php, products.php
+
+1. Implemented paging function, on the bottom of browsing page. Total page number can be calculated dynamically.
+
+2. Implemented search function. Users can filter the products based on the category(coffee or tea or all) and can search according to the key words(partial match with product name). Search and filtering are integrated together.
+
 #### Dayuan Chen
 
 ##### Database Design
 
 ##### Frontend & Backend
+
+#####add.php, addtodatabase.php, delete.php, update.php, updatetodatabase.php
+
+1. For admin users, to manage the product database.
+
+2. Add a new item by inputting all product information.
+
+3. Delete a item by clicking the delete button. Implemented soft delete.
+
+4. Update item information by inputing new values of certain attributes.
+
+#####index.php, navbar.php, products.php
+
+1. Show the products and their information to the current user according to their privilege. For guests, they can only browse the items and their detail; for customers, they can add intems into their cart; for the admins, they can list all items and remove(soft delete)\update\add items by additional buttons and links.
+
+2. Navigation bar will show different greeting messages to different users.
 
 #### Miao Miao
 
