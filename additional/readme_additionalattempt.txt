@@ -1,0 +1,1 @@
+For this project, we also try to implement it in a more elegant way which uses react as front-end and express as back-end, and REST API for all operations. This is regarded as an additional attempt and to learn more about frameworks. There's also a report attached in it.
