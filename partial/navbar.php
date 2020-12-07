@@ -30,15 +30,15 @@ if (!isset($_SESSION)) {
         {
             echo "<a class='btn btn-outline-success my-2 my-sm-0' href='login.php'>Login</a>";
         } 
-        elseif(isset($_SESSION["adminloggedin"]) && $_SESSION["adminloggedin"] === true)
+        elseif(isset($_SESSION["adminloggedin"]) || $_SESSION["adminloggedin"] === true)
         {
-            $s = "hello, admin " . htmlspecialchars($_SESSION["username"]);
+            $s = "<p style='color:white'>hello, admin " . htmlspecialchars($_SESSION["username"]) . "</p>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='logout.php'>Logout</a>";
             echo $s;
         }
         else 
         {
-            $s = "hello," . htmlspecialchars($_SESSION["username"]);
+            $s = "<p style='color:white'>hello," . htmlspecialchars($_SESSION["username"]) . "</p>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='order.php'>Orders</a>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='cart.php'>Cart</a>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='logout.php'>Logout</a>";
