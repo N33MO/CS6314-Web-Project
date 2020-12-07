@@ -26,10 +26,13 @@
                 $row = mysqli_fetch_object($result);
                 $order_id = number_format($row->max_order_id) + 1;
 
-                $sql = "SELECT Name, Price, cart_own_product.Num, product.ProductID  FROM cart_own_product, product WHERE cart_own_product.AccountID=$account_id AND product.ProductID = cart_own_product.ProductID";
+                $sql = "SELECT Name, Price, cart_own_product.Num, product.ProductID  
+                FROM cart_own_product, product 
+                WHERE cart_own_product.AccountID=$account_id 
+                AND product.ProductID = cart_own_product.ProductID";
+
                 $result = mysqli_query($conn, $sql);
                 if ($result != null && $result->num_rows > 0) {
-                    $count = 1;
                     $total_price = 0;
                     $order_detail_sql = "";
                     $update_stock_sql = "";
@@ -41,12 +44,13 @@
                         $order_detail_sql .= "INSERT INTO 
                         order_detail (`OrderID`,`ProductID`,`Name`,`PurchasedPrice`,`Num`) 
                         VALUES($order_id, $pid, '$name', $price, $num);";
+
                         $total_price += $row["Price"];
 
                         $check_sql = "SELECT Num FROM product WHERE ProductID=$pid";
-                        $result = mysqli_query($conn, $check_sql);
-                        if ($result->num_rows > 0) {
-                            $stock_num = mysqli_fetch_row($result)[0];
+                        $check_result = mysqli_query($conn, $check_sql);
+                        if ($check_result->num_rows > 0) {
+                            $stock_num = mysqli_fetch_row($check_result)[0];
                             if ($num > $stock_num) {
                                 die("<p>$name is out of stock.</p>");
                             }
@@ -55,33 +59,24 @@
                     }
                     $sql = "INSERT INTO 
                     purchased_order (`OrderID`,`AccountID`,`PurchaseDate`, `TotalPrice`) 
-                    VALUES($order_id, $account_id, date('$now_date'), 0)";
+                    VALUES($order_id, $account_id, date('$now_date'), $total_price)";
                     $result = mysqli_query($conn, $sql);
                     if ($result == false) {
-                        // echo "Failed to place order.";
                         die('Failed to place order. ' . mysqli_error($conn));
                     }
-                    if ($conn->multi_query($order_detail_sql) === TRUE) {
-                        $sql = "UPDATE purchased_order SET TotalPrice=$total_price WHERE OrderID=$order_id";
-                        $result = mysqli_query($conn, $sql);
-                        if ($result == false) {
-                            // echo "Failed to update total price.";
-                            die('<p>Failed to update total price.</p> ' . mysqli_error($conn));
-                        }
-                        $sql = "DELETE FROM cart_own_product WHERE AccountID=$account_id";
-                        $result = mysqli_query($conn, $sql);
-                        if ($result == false) {
-                            // echo "Failed to clear shopping cart.";
-                            die('<p>Failed to clear shopping cart.</p> ' . mysqli_error($conn));
-                        } else {
-                            echo "<p>Your order has been placed!</p>";
-                        }
-                    } else {
+
+                    $sql = "DELETE FROM cart_own_product WHERE AccountID=$account_id";
+                    if (mysqli_query($conn, $sql) === FALSE) {
+                        die('<p>Failed to clear shopping cart.</p> ' . mysqli_error($conn));
+                    }
+
+                    if (mysqli_multi_query($conn, $order_detail_sql . $update_stock_sql) === FALSE) {
                         die('<p>Failed to insert order_detail.</p> ' . mysqli_error($conn));
                     }
-                    if($conn->multi_query($update_stock_sql)===FALSE){
-                        die('<p>Failed to update product stock.</p> ' . mysqli_error($conn));
-                    }
+                    // if (mysqli_multi_query($conn, $update_stock_sql) === FALSE) {
+                    //     die('<p>Failed to update product stock.</p> ' . mysqli_error($conn));
+                    // }
+                    echo "<p>Your order has been placed!</p>";
                 }
 
                 $conn->close();
