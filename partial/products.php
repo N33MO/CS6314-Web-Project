@@ -1,5 +1,7 @@
 <?php
-    session_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
     if (isset($_GET['pageno'])) {
         $pageno = $_GET['pageno'];
     } else {
@@ -245,7 +247,3 @@
 
         echo $output;
     }
-
-
-
-?>

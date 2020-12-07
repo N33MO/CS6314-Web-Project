@@ -20,9 +20,6 @@ if (!isset($_SESSION)) {
             <li class="nav-item">
                 <a class="nav-link" href="index.php#tea-row">Tea</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="index.php">About</a>
-            </li>
         </ul>
         <?php
         // Check if the user is logged in, if not then show login button
@@ -32,13 +29,13 @@ if (!isset($_SESSION)) {
         } 
         elseif(isset($_SESSION["adminloggedin"]) || $_SESSION["adminloggedin"] === true)
         {
-            $s = "<p style='color:white'>hello, admin " . htmlspecialchars($_SESSION["username"]) . "</p>";
+            $s = "<span class='text-white mr-2'>hello, admin " . htmlspecialchars($_SESSION["username"])."</span>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='logout.php'>Logout</a>";
             echo $s;
         }
         else 
         {
-            $s = "<p style='color:white'>hello," . htmlspecialchars($_SESSION["username"]) . "</p>";
+            $s = "<span class='text-white mr-2'>hello," . htmlspecialchars($_SESSION["username"])."</span>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='order.php'>Orders</a>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='cart.php'>Cart</a>";
             $s .= "<a class='btn btn-outline-success my-2 my-sm-0' href='logout.php'>Logout</a>";
