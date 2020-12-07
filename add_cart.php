@@ -4,6 +4,8 @@ if (!isset($_SESSION)) {
 }
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     $account_id = $_SESSION["id"];
+} else {
+    die(header("Location: login.php"));
 }
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if ($_GET["pid"]) {
@@ -18,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $sql = "INSERT INTO cart_own_product (`AccountID`,`ProductID`,`Num`) VALUES($account_id, $pid, 1) ON DUPLICATE KEY UPDATE Num = Num+1";
         $result = mysqli_query($conn, $sql);
     }
+
 }
 
 header("Location: detail.php?pid=$pid");
